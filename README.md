@@ -1,6 +1,6 @@
 # CoinPulse Backend
 
-REST API of **CoinPulse** — a crypto tracker web app built as a stable, fully controlled target for
+REST API of **CoinPulse** - a crypto tracker web app built as a stable, fully controlled target for
 UI/API test automation (Cypress, Playwright, Selenium). Prices are deterministic seed data, not a
 live market feed. This is not a real trading service and provides no investment advice.
 
