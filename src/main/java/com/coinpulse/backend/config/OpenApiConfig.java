@@ -17,7 +17,7 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("CoinPulse API")
                         .version("v1")
-                        .description("REST API of CoinPulse — a crypto tracker built as a stable target "
+                        .description("REST API of CoinPulse - a crypto tracker built as a stable target "
                                 + "for UI/API test automation. Prices are deterministic seed data, not a live feed."))
                 .components(new Components().addSecuritySchemes("bearerAuth",
                         new SecurityScheme()

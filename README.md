@@ -6,7 +6,7 @@ live market feed. This is not a real trading service and provides no investment 
 
 ## Stack
 
-- Java 21, Spring Boot 3.5, Maven (wrapper included — no global Maven needed)
+- Java 21, Spring Boot 3.5, Maven (wrapper included - no global Maven needed)
 - H2 in-memory database, seeded from `data.sql` on startup
 - JWT authentication (stateless), Spring Security
 - OpenAPI/Swagger UI via springdoc
@@ -27,7 +27,7 @@ The API starts on `http://localhost:8080`:
 | Username | Password | Role |
 |---|---|---|
 | `standard_user` | `Test123!` | USER |
-| `locked_user` | `Test123!` | USER (locked — login returns 423) |
+| `locked_user` | `Test123!` | USER (locked - login returns 423) |
 | `admin` | `Admin123!` | ADMIN |
 
 ## API overview
