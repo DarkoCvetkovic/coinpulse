@@ -4,6 +4,7 @@ import LoginPage from '../pages/LoginPage.vue'
 import DashboardPage from '../pages/DashboardPage.vue'
 import MarketsPage from '../pages/MarketsPage.vue'
 import TradePage from '../pages/TradePage.vue'
+import ComparePage from '../pages/ComparePage.vue'
 import CoinFormPage from '../pages/CoinFormPage.vue'
 import NotFoundPage from '../pages/NotFoundPage.vue'
 
@@ -33,6 +34,12 @@ const router = createRouter({
       path: '/trade',
       name: 'trade',
       component: TradePage,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/compare',
+      name: 'compare',
+      component: ComparePage,
       meta: { requiresAuth: true },
     },
     {

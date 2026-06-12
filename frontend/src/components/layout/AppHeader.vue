@@ -43,6 +43,9 @@ async function handleLogout() {
         <RouterLink :to="{ name: 'trade' }" class="app-header__link" data-testid="nav-trade">
           Trade
         </RouterLink>
+        <RouterLink :to="{ name: 'compare' }" class="app-header__link" data-testid="nav-compare">
+          Compare
+        </RouterLink>
       </nav>
 
       <div v-if="auth.isAuthenticated" class="app-header__user">
