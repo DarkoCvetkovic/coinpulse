@@ -1,0 +1,17 @@
+# OS junk
+Thumbs.db
+.DS_Store
+Desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Local AI assistant files (never commit)
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+AGENTS.md
+.cursorrules
+.aider*
