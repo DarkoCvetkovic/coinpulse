@@ -28,6 +28,13 @@ same time, a stable target for demonstrating test automation across multiple fra
   REST-assured; Allure and Mochawesome reporting
 - **CI/CD:** GitHub Actions, GitHub Pages (frontend + live test reports), Render (backend)
 
+## Live demo
+
+- **Backend API:** https://coinpulse-backend-pba8.onrender.com (Swagger docs at
+  [/swagger-ui.html](https://coinpulse-backend-pba8.onrender.com/swagger-ui.html))
+- Hosted on Render free tier - the first request after a period of inactivity can take
+  30-60 seconds while the service wakes up.
+
 ## Running locally
 
 ```bash
