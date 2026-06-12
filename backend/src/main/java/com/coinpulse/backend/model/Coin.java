@@ -71,6 +71,15 @@ public class Coin {
     @Column(length = 500)
     private String logoUrl;
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    @jakarta.persistence.Lob
+    @Column(name = "logo_data")
+    private byte[] logoData;
+
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    @Column(name = "logo_content_type")
+    private String logoContentType;
+
     public Coin() {
     }
 
@@ -168,5 +177,21 @@ public class Coin {
 
     public void setLogoUrl(String logoUrl) {
         this.logoUrl = logoUrl;
+    }
+
+    public byte[] getLogoData() {
+        return logoData;
+    }
+
+    public void setLogoData(byte[] logoData) {
+        this.logoData = logoData;
+    }
+
+    public String getLogoContentType() {
+        return logoContentType;
+    }
+
+    public void setLogoContentType(String logoContentType) {
+        this.logoContentType = logoContentType;
     }
 }

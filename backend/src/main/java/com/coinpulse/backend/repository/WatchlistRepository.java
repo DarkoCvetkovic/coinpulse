@@ -13,4 +13,6 @@ public interface WatchlistRepository extends JpaRepository<WatchlistItem, Long> 
     Optional<WatchlistItem> findByUserUsernameAndCoinId(String username, Long coinId);
 
     boolean existsByUserUsernameAndCoinId(String username, Long coinId);
+
+    void deleteByUserId(Long userId);
 }

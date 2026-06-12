@@ -11,4 +11,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findByUserUsernameOrderByDateDesc(String username);
 
     Optional<Transaction> findByIdAndUserUsername(Long id, String username);
+
+    void deleteByUserId(Long userId);
 }

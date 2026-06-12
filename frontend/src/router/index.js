@@ -6,6 +6,7 @@ import MarketsPage from '../pages/MarketsPage.vue'
 import TradePage from '../pages/TradePage.vue'
 import ComparePage from '../pages/ComparePage.vue'
 import ApiExplorerPage from '../pages/ApiExplorerPage.vue'
+import FilesPage from '../pages/FilesPage.vue'
 import CoinFormPage from '../pages/CoinFormPage.vue'
 import NotFoundPage from '../pages/NotFoundPage.vue'
 
@@ -47,6 +48,12 @@ const router = createRouter({
       path: '/api-explorer',
       name: 'api-explorer',
       component: ApiExplorerPage,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/files',
+      name: 'files',
+      component: FilesPage,
       meta: { requiresAuth: true },
     },
     {
