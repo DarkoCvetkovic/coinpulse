@@ -52,6 +52,9 @@ async function handleLogout() {
         <RouterLink :to="{ name: 'files' }" class="app-header__link" data-testid="nav-files">
           Files
         </RouterLink>
+        <RouterLink :to="{ name: 'dynamic' }" class="app-header__link" data-testid="nav-dynamic">
+          Live
+        </RouterLink>
       </nav>
 
       <div v-if="auth.isAuthenticated" class="app-header__user">

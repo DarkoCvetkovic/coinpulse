@@ -7,6 +7,7 @@ import TradePage from '../pages/TradePage.vue'
 import ComparePage from '../pages/ComparePage.vue'
 import ApiExplorerPage from '../pages/ApiExplorerPage.vue'
 import FilesPage from '../pages/FilesPage.vue'
+import DynamicPage from '../pages/DynamicPage.vue'
 import CoinFormPage from '../pages/CoinFormPage.vue'
 import NotFoundPage from '../pages/NotFoundPage.vue'
 
@@ -54,6 +55,12 @@ const router = createRouter({
       path: '/files',
       name: 'files',
       component: FilesPage,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/dynamic',
+      name: 'dynamic',
+      component: DynamicPage,
       meta: { requiresAuth: true },
     },
     {
