@@ -15,4 +15,9 @@ export const coinsApi = {
     const { data } = await http.get(`/api/coins/${id}`)
     return data
   },
+
+  /** Admin only. */
+  async remove(id) {
+    await http.delete(`/api/coins/${id}`)
+  },
 }

@@ -32,6 +32,7 @@ public class TestController {
     @Operation(summary = "Reset the database to its seed state (re-runs data.sql)")
     @PostMapping("/reset")
     public Map<String, String> reset() throws SQLException {
+        jdbcTemplate.execute("DELETE FROM watchlist_items");
         jdbcTemplate.execute("DELETE FROM transactions");
         jdbcTemplate.execute("DELETE FROM coins");
         jdbcTemplate.execute("DELETE FROM users");

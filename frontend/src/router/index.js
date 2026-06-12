@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import LoginPage from '../pages/LoginPage.vue'
 import DashboardPage from '../pages/DashboardPage.vue'
+import MarketsPage from '../pages/MarketsPage.vue'
 import NotFoundPage from '../pages/NotFoundPage.vue'
 
 const router = createRouter({
@@ -18,6 +19,12 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: DashboardPage,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/markets',
+      name: 'markets',
+      component: MarketsPage,
       meta: { requiresAuth: true },
     },
     { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFoundPage },

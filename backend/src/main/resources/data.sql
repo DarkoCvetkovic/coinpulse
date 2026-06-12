@@ -43,8 +43,16 @@ INSERT INTO transactions (id, user_id, coin_id, type, amount, price, tx_date, no
 (11, 3, 2, 'buy', 2.00000000, 3400.00000000, '2026-05-14', 'Admin demo transaction'),
 (12, 3, 17, 'buy', 50.00000000, 10.25000000, '2026-05-28', 'Admin demo transaction');
 
+INSERT INTO watchlist_items (id, user_id, coin_id) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 5),
+(4, 1, 12),
+(5, 3, 2);
+
 -- Keep identity counters clear of seeded ids so new inserts never collide,
 -- both at startup and after every /api/test/reset.
 ALTER TABLE users ALTER COLUMN id RESTART WITH 1000;
 ALTER TABLE coins ALTER COLUMN id RESTART WITH 1000;
 ALTER TABLE transactions ALTER COLUMN id RESTART WITH 1000;
+ALTER TABLE watchlist_items ALTER COLUMN id RESTART WITH 1000;

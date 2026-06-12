@@ -1,13 +1,16 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../../stores/auth'
+import { useWatchlistStore } from '../../stores/watchlist'
 import BaseButton from '../common/BaseButton.vue'
 
 const auth = useAuthStore()
+const watchlist = useWatchlistStore()
 const router = useRouter()
 
 async function handleLogout() {
   await auth.logout()
+  watchlist.reset()
   router.push({ name: 'login' })
 }
 </script>
@@ -33,6 +36,9 @@ async function handleLogout() {
       <nav class="app-header__nav" data-testid="main-nav">
         <RouterLink :to="{ name: 'dashboard' }" class="app-header__link" data-testid="nav-dashboard">
           Dashboard
+        </RouterLink>
+        <RouterLink :to="{ name: 'markets' }" class="app-header__link" data-testid="nav-markets">
+          Markets
         </RouterLink>
       </nav>
 

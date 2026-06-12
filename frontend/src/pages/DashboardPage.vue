@@ -2,6 +2,7 @@
 import { computed, onMounted } from 'vue'
 import { coinsApi } from '../api/coinsApi'
 import { transactionsApi } from '../api/transactionsApi'
+import { useWatchlistStore } from '../stores/watchlist'
 import { useAsync } from '../composables/useAsync'
 import { formatCurrency, formatPercent } from '../utils/formatters'
 import BaseCard from '../components/common/BaseCard.vue'
@@ -10,6 +11,8 @@ import ErrorAlert from '../components/common/ErrorAlert.vue'
 import StatCard from '../components/dashboard/StatCard.vue'
 import PriceChart from '../components/dashboard/PriceChart.vue'
 import TopMovers from '../components/dashboard/TopMovers.vue'
+
+const watchlist = useWatchlistStore()
 
 const {
   data: dashboard,
@@ -20,6 +23,7 @@ const {
   const [coinsPage, transactions] = await Promise.all([
     coinsApi.list({ size: 100, sort: 'rank,asc' }),
     transactionsApi.list(),
+    watchlist.load(),
   ])
   return { coins: coinsPage.content, transactions }
 })
@@ -127,6 +131,12 @@ const featuredCoin = computed(() => {
           :value="formatPercent(portfolioChangePercent)"
           :trend="portfolioChangePercent >= 0 ? 'up' : 'down'"
           test-id="stat-24h-change"
+        />
+        <StatCard
+          label="Watchlist"
+          :value="String(watchlist.items.length)"
+          sub="coins tracked"
+          test-id="stat-watchlist"
         />
         <StatCard
           label="Transactions"
