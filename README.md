@@ -1,5 +1,7 @@
 # CoinPulse
 
+[![Backend CI](https://github.com/DarkoCvetkovic/coinpulse/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/DarkoCvetkovic/coinpulse/actions/workflows/backend-ci.yml)
+
 Full-stack cryptocurrency tracking application (markets table, watchlist, portfolio with
 transactions) built as a complete QA portfolio project. The app is a real product and, at the
 same time, a stable target for demonstrating test automation across multiple frameworks.
