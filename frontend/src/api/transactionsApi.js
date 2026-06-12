@@ -10,4 +10,13 @@ export const transactionsApi = {
     const { data } = await http.get('/api/transactions')
     return data
   },
+
+  /**
+   * @param {{ coinId: number, type: 'buy'|'sell', amount: number,
+   *   price: number, date: string, note?: string }} transaction
+   */
+  async create(transaction) {
+    const { data } = await http.post('/api/transactions', transaction)
+    return data
+  },
 }

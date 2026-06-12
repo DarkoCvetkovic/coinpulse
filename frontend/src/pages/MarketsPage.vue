@@ -134,6 +134,14 @@ const statusOptions = computed(() => STATUSES.map((s) => ({ value: s, label: s }
     <div class="markets__heading">
       <h1>Markets</h1>
       <span class="text-muted" data-testid="markets-total">{{ totalElements }} coins</span>
+      <BaseButton
+        v-if="auth.isAdmin"
+        class="markets__add"
+        test-id="coin-add-button"
+        @click="$router.push({ name: 'coin-new' })"
+      >
+        Add coin
+      </BaseButton>
     </div>
 
     <BaseCard test-id="markets-filters-card">
@@ -250,6 +258,14 @@ const statusOptions = computed(() => STATUSES.map((s) => ({ value: s, label: s }
                 </button>
                 <BaseButton
                   v-if="auth.isAdmin"
+                  variant="secondary"
+                  :test-id="`coin-edit-${coin.symbol}`"
+                  @click="$router.push({ name: 'coin-edit', params: { id: coin.id } })"
+                >
+                  Edit
+                </BaseButton>
+                <BaseButton
+                  v-if="auth.isAdmin"
                   variant="danger"
                   :test-id="`coin-delete-${coin.symbol}`"
                   @click="coinPendingDelete = coin"
@@ -312,6 +328,10 @@ const statusOptions = computed(() => STATUSES.map((s) => ({ value: s, label: s }
   display: flex;
   align-items: baseline;
   gap: 14px;
+}
+
+.markets__add {
+  margin-left: auto;
 }
 
 .markets__heading h1 {

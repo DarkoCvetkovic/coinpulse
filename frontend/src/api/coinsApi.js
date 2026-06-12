@@ -17,6 +17,18 @@ export const coinsApi = {
   },
 
   /** Admin only. */
+  async create(coin) {
+    const { data } = await http.post('/api/coins', coin)
+    return data
+  },
+
+  /** Admin only. */
+  async update(id, coin) {
+    const { data } = await http.put(`/api/coins/${id}`, coin)
+    return data
+  },
+
+  /** Admin only. */
   async remove(id) {
     await http.delete(`/api/coins/${id}`)
   },
