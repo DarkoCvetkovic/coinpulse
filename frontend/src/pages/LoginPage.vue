@@ -1,7 +1,8 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { systemApi } from '../api/systemApi'
 import BaseButton from '../components/common/BaseButton.vue'
 import BaseInput from '../components/common/BaseInput.vue'
 import ErrorAlert from '../components/common/ErrorAlert.vue'
@@ -14,6 +15,16 @@ const form = reactive({ username: '', password: '', rememberMe: false })
 const fieldErrors = reactive({ username: '', password: '' })
 const serverError = ref('')
 const submitting = ref(false)
+const showSlowHint = ref(false)
+let slowHintTimer = null
+
+// The free-tier backend sleeps after inactivity; waking it while the user
+// types means the actual login call is usually instant.
+onMounted(() => {
+  systemApi.ping().catch(() => {})
+})
+
+onBeforeUnmount(() => clearTimeout(slowHintTimer))
 
 function validate() {
   fieldErrors.username = form.username.trim() ? '' : 'Username is required'
@@ -32,6 +43,9 @@ async function handleSubmit() {
   if (!validate()) return
 
   submitting.value = true
+  slowHintTimer = setTimeout(() => {
+    showSlowHint.value = true
+  }, 5000)
   try {
     await auth.login(form)
     router.push(route.query.redirect ?? { name: 'dashboard' })
@@ -39,6 +53,8 @@ async function handleSubmit() {
     serverError.value = messageForStatus(err.response?.status)
   } finally {
     submitting.value = false
+    clearTimeout(slowHintTimer)
+    showSlowHint.value = false
   }
 }
 </script>
@@ -91,6 +107,11 @@ async function handleSubmit() {
       <BaseButton type="submit" :loading="submitting" test-id="login-submit">
         Sign in
       </BaseButton>
+
+      <p v-if="showSlowHint" class="login-page__slow-hint" data-testid="login-slow-hint">
+        The demo backend runs on free hosting and is waking up - this first request can take
+        up to a minute. Hang tight!
+      </p>
     </form>
   </div>
 </template>
@@ -143,5 +164,11 @@ async function handleSubmit() {
   font-size: 14px;
   color: var(--color-text-muted);
   cursor: pointer;
+}
+
+.login-page__slow-hint {
+  font-size: 13px;
+  color: var(--color-warning);
+  text-align: center;
 }
 </style>
