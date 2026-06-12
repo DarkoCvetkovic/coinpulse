@@ -46,6 +46,9 @@ async function handleLogout() {
         <RouterLink :to="{ name: 'compare' }" class="app-header__link" data-testid="nav-compare">
           Compare
         </RouterLink>
+        <RouterLink :to="{ name: 'api-explorer' }" class="app-header__link" data-testid="nav-api-explorer">
+          API
+        </RouterLink>
       </nav>
 
       <div v-if="auth.isAuthenticated" class="app-header__user">
