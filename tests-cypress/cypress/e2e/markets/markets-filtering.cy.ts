@@ -7,21 +7,29 @@ import {
 } from '../../support/keywords/markets.keywords'
 
 describe('Markets filtering', { tags: ['@markets'] }, () => {
+  const bitcoin = 'BTC'
+  const terraClassic = 'LUNC'
+
   beforeEach(() => {
     cy.login(users.standard)
     action_openMarkets()
   })
 
   it('shows only delisted coins when filtered by delisted status', () => {
-    action_filterByStatus('delisted')
-    check_coinRowVisible('LUNC')
-    check_coinRowVisible('FTT')
-    check_coinRowAbsent('BTC')
+    const delistedStatus = 'delisted'
+    const ftx = 'FTT'
+
+    action_filterByStatus(delistedStatus)
+    check_coinRowVisible(terraClassic)
+    check_coinRowVisible(ftx)
+    check_coinRowAbsent(bitcoin)
   })
 
   it('shows only active coins when filtered by active status', () => {
-    action_filterByStatus('active')
-    check_coinRowVisible('BTC')
-    check_coinRowAbsent('LUNC')
+    const activeStatus = 'active'
+
+    action_filterByStatus(activeStatus)
+    check_coinRowVisible(bitcoin)
+    check_coinRowAbsent(terraClassic)
   })
 })

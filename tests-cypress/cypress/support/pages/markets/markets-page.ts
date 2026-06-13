@@ -75,6 +75,11 @@ export const marketsPage = {
     cy.get(marketsObj.deleteModal.modal).should('not.exist')
   },
 
+  confirmDelete: () => {
+    cy.get(marketsObj.deleteModal.confirm).click()
+    cy.get(marketsObj.deleteModal.modal).should('not.exist')
+  },
+
   verifyShellReady: () => {
     cy.get(marketsObj.table).should('be.visible')
     cy.get(marketsObj.search).should('be.visible')

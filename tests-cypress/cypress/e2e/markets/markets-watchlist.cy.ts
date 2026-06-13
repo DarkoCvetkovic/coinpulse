@@ -7,6 +7,8 @@ import {
 } from '../../support/keywords/markets.keywords'
 
 describe('Markets watchlist', { tags: ['@markets'] }, () => {
+  const watchlistedSymbol = 'BTC'
+
   beforeEach(() => {
     cy.resetBackend()
     cy.login(users.standard)
@@ -14,14 +16,14 @@ describe('Markets watchlist', { tags: ['@markets'] }, () => {
   })
 
   it('shows a seeded coin as starred', () => {
-    check_watchlistStarOn('BTC')
+    check_watchlistStarOn(watchlistedSymbol)
   })
 
   it('removes and re-adds a coin to the watchlist', () => {
-    check_watchlistStarOn('BTC')
-    action_toggleWatchlist('BTC')
-    check_watchlistStarOff('BTC')
-    action_toggleWatchlist('BTC')
-    check_watchlistStarOn('BTC')
+    check_watchlistStarOn(watchlistedSymbol)
+    action_toggleWatchlist(watchlistedSymbol)
+    check_watchlistStarOff(watchlistedSymbol)
+    action_toggleWatchlist(watchlistedSymbol)
+    check_watchlistStarOn(watchlistedSymbol)
   })
 })

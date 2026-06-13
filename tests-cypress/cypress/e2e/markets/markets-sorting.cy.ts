@@ -13,13 +13,17 @@ describe('Markets sorting', { tags: ['@markets'] }, () => {
   })
 
   it('lists coins by rank ascending by default with BTC first', () => {
-    check_firstCoinRow('BTC')
+    const topRankedSymbol = 'BTC'
+
+    check_firstCoinRow(topRankedSymbol)
   })
 
   it('toggles the sort direction when the same column is clicked twice', () => {
-    action_sortBy('name')
-    check_sortIndicator('name', 'asc')
-    action_sortBy('name')
-    check_sortIndicator('name', 'desc')
+    const column = 'name'
+
+    action_sortBy(column)
+    check_sortIndicator(column, 'asc')
+    action_sortBy(column)
+    check_sortIndicator(column, 'desc')
   })
 })

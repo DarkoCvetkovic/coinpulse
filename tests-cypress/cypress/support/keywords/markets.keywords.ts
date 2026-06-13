@@ -1,3 +1,4 @@
+import { routes } from '../constants/routes'
 import { marketsPage } from '../pages/markets/markets-page'
 
 export function action_openMarkets() {
@@ -55,10 +56,23 @@ export function action_cancelDeleteCoin(symbol: string) {
   marketsPage.cancelDelete()
 }
 
+export function action_deleteCoin(symbol: string) {
+  cy.log(`Delete coin ${symbol} via the confirmation modal`)
+
+  marketsPage.openDeleteModal(symbol)
+  marketsPage.confirmDelete()
+}
+
 export function check_marketsShellReady() {
   cy.log('Verify the markets table, search and filters render')
 
   marketsPage.verifyShellReady()
+}
+
+export function check_landedOnMarkets() {
+  cy.log('Verify navigation to the markets page')
+
+  cy.location('pathname').should('eq', routes.markets)
 }
 
 export function check_firstCoinRow(symbol: string) {

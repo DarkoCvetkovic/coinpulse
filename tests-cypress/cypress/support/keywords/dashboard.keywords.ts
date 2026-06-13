@@ -14,9 +14,9 @@ export function check_dashboardShellReady() {
   dashboardPage.verifyTopMoversVisible()
 }
 
-export function check_portfolioStatsForSeed() {
-  cy.log('Verify the seeded transaction and watchlist counts for standard_user')
+export function check_portfolioStats(transactionCount: number, watchlistCount: number) {
+  cy.log(`Verify portfolio stats - transactions: ${transactionCount}, watchlist: ${watchlistCount}`)
 
-  dashboardPage.verifyTransactionsCount(10)
-  dashboardPage.verifyWatchlistCount(4)
+  dashboardPage.verifyTransactionsCount(transactionCount)
+  dashboardPage.verifyWatchlistCount(watchlistCount)
 }

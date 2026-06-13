@@ -14,13 +14,18 @@ describe('Markets search', { tags: ['@markets'] }, () => {
   })
 
   it('filters the table to a coin matched by symbol', () => {
-    action_searchCoins('ETH')
-    check_coinRowVisible('ETH')
-    check_coinRowAbsent('BTC')
+    const searchSymbol = 'ETH'
+    const otherSymbol = 'BTC'
+
+    action_searchCoins(searchSymbol)
+    check_coinRowVisible(searchSymbol)
+    check_coinRowAbsent(otherSymbol)
   })
 
   it('shows the empty state when no coin matches', () => {
-    action_searchCoins('zzznotacoin')
+    const missingTerm = 'zzznotacoin'
+
+    action_searchCoins(missingTerm)
     check_marketsEmptyState()
   })
 })

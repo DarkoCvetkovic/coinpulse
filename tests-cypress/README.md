@@ -30,11 +30,11 @@ nothing with the frontend project.
 
 ## Running
 
-| Command | Description |
-| --- | --- |
-| `npm run cy:open` | Interactive runner |
-| `npm run cy:run` | All specs, headless (Mochawesome report in `cypress/reports/`) |
-| `npm run test:smoke` | Only `@smoke` specs |
-| `npm run test:dashboard` | Only `@dashboard` specs |
-| `npm run test:markets` | Only `@markets` specs |
-| `npm run validate` | format check, lint and typecheck |
+| Command                  | Description                                                    |
+| ------------------------ | -------------------------------------------------------------- |
+| `npm run cy:open`        | Interactive runner                                             |
+| `npm run cy:run`         | All specs, headless (Mochawesome report in `cypress/reports/`) |
+| `npm run test:smoke`     | Only `@smoke` specs                                            |
+| `npm run test:dashboard` | Only `@dashboard` specs                                        |
+| `npm run test:markets`   | Only `@markets` specs                                          |
+| `npm run validate`       | format check, lint and typecheck                               |

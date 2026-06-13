@@ -15,10 +15,13 @@ describe('Markets pagination', { tags: ['@markets'] }, () => {
   })
 
   it('moves to the next page of coins', () => {
-    action_setPageSize('5')
+    const pageSize = '5'
+    const firstPageSymbol = 'BTC'
+
+    action_setPageSize(pageSize)
     check_paginationVisible()
-    check_coinRowVisible('BTC')
+    check_coinRowVisible(firstPageSymbol)
     action_goToNextMarketsPage()
-    check_coinRowAbsent('BTC')
+    check_coinRowAbsent(firstPageSymbol)
   })
 })
