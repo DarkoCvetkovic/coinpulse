@@ -55,4 +55,16 @@ export const loginPage = {
     cy.get(loginObj.errors.username).should('be.visible')
     cy.get(loginObj.errors.password).should('be.visible')
   },
+
+  verifyUsernameError: (message: string) => {
+    cy.get(loginObj.errors.username).should('be.visible').and('contain.text', message)
+  },
+
+  verifyPasswordError: (message: string) => {
+    cy.get(loginObj.errors.password).should('be.visible').and('contain.text', message)
+  },
+
+  verifyNoUsernameError: () => {
+    cy.get(loginObj.errors.username).should('not.exist')
+  },
 }

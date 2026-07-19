@@ -8,6 +8,7 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "test:e2e": "cypress run",
+    "test:auth": "cypress run --spec \"cypress/e2e/auth/**/*.cy.ts\"",
     "test:smoke": "cypress run --spec \"cypress/e2e/smoke/**/*.cy.ts\"",
     "test:dashboard": "cypress run --spec \"cypress/e2e/dashboard/**/*.cy.ts\"",
     "test:markets": "cypress run --spec \"cypress/e2e/markets/**/*.cy.ts\"",
