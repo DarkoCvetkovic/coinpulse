@@ -15,6 +15,7 @@
     "test:coin-form": "cypress run --spec \"cypress/e2e/coin-form/**/*.cy.ts\"",
     "test:api-explorer": "cypress run --spec \"cypress/e2e/api-explorer/**/*.cy.ts\"",
     "test:files": "cypress run --spec \"cypress/e2e/files/**/*.cy.ts\"",
+    "test:dynamic": "cypress run --spec \"cypress/e2e/dynamic/**/*.cy.ts\"",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
