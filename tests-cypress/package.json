@@ -13,6 +13,7 @@
     "test:markets": "cypress run --spec \"cypress/e2e/markets/**/*.cy.ts\"",
     "test:trade": "cypress run --spec \"cypress/e2e/trade/**/*.cy.ts\"",
     "test:coin-form": "cypress run --spec \"cypress/e2e/coin-form/**/*.cy.ts\"",
+    "test:compare": "cypress run --spec \"cypress/e2e/compare/**/*.cy.ts\"",
     "test:api-explorer": "cypress run --spec \"cypress/e2e/api-explorer/**/*.cy.ts\"",
     "test:files": "cypress run --spec \"cypress/e2e/files/**/*.cy.ts\"",
     "test:dynamic": "cypress run --spec \"cypress/e2e/dynamic/**/*.cy.ts\"",
