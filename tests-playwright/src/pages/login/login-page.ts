@@ -38,6 +38,18 @@ export class LoginPage extends BasePage {
     await this.submitButton.click()
   }
 
+  async fillUsername(value: string): Promise<void> {
+    await this.username.fill(value)
+  }
+
+  async fillPassword(value: string): Promise<void> {
+    await this.password.fill(value)
+  }
+
+  async submit(): Promise<void> {
+    await this.submitButton.click()
+  }
+
   async verifyShellReady(): Promise<void> {
     await expect(this.username).toBeVisible()
     await expect(this.password).toBeVisible()
@@ -46,5 +58,24 @@ export class LoginPage extends BasePage {
 
   async verifyRedirectedToDashboard(): Promise<void> {
     await expect(this.page).toHaveURL(new RegExp(`${routes.dashboard}$`))
+  }
+
+  async verifyServerError(message: string): Promise<void> {
+    await expect(this.serverError).toBeVisible()
+    await expect(this.serverError).toContainText(message)
+  }
+
+  async verifyUsernameError(message: string): Promise<void> {
+    await expect(this.usernameError).toBeVisible()
+    await expect(this.usernameError).toContainText(message)
+  }
+
+  async verifyPasswordError(message: string): Promise<void> {
+    await expect(this.passwordError).toBeVisible()
+    await expect(this.passwordError).toContainText(message)
+  }
+
+  async verifyNoUsernameError(): Promise<void> {
+    await expect(this.usernameError).toBeHidden()
   }
 }

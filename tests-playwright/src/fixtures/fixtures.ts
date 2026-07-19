@@ -6,12 +6,14 @@ import { ComparePage } from '../pages/compare/compare-page'
 import { DashboardPage } from '../pages/dashboard/dashboard-page'
 import { DynamicPage } from '../pages/dynamic/dynamic-page'
 import { FilesPage } from '../pages/files/files-page'
+import { HeaderPage } from '../pages/layout/header-page'
 import { LoginPage } from '../pages/login/login-page'
 import { MarketsPage } from '../pages/markets/markets-page'
 import { TradePage } from '../pages/trade/trade-page'
 
 interface Fixtures {
   api: ApiClient
+  headerPage: HeaderPage
   loginPage: LoginPage
   dashboardPage: DashboardPage
   marketsPage: MarketsPage
@@ -30,6 +32,9 @@ interface Fixtures {
 export const test = base.extend<Fixtures>({
   api: async ({ request }, use) => {
     await use(new ApiClient(request))
+  },
+  headerPage: async ({ page }, use) => {
+    await use(new HeaderPage(page))
   },
   loginPage: async ({ page }, use) => {
     await use(new LoginPage(page))

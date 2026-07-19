@@ -1,30 +1,20 @@
 export type CoinStatus = 'active' | 'delisted'
 
-export interface Coin {
-  id: number
-  name: string
-  symbol: string
-  price: number
-  marketCap: number
-  change24h: number
-  rank: number
-  category: string
-  launchDate: string
-  status: CoinStatus
-  description: string
-  logoUrl: string
-}
-
 export interface CoinInput {
   name: string
   symbol: string
   price: number
-  marketCap: number
-  change24h: number
-  rank: number
+  marketCap?: number | null
+  change24h?: number | null
+  rank?: number | null
   category: string
-  launchDate: string
+  launchDate?: string | null
+  status?: CoinStatus
+  description?: string | null
+  logoUrl?: string | null
+}
+
+export interface Coin extends CoinInput {
+  id: number
   status: CoinStatus
-  description: string
-  logoUrl: string
 }
