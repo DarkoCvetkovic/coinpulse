@@ -40,14 +40,14 @@ export const coinFormPage = {
   },
 
   fillValid: (name: string, symbol: string) => {
-    cy.get(coinFormObj.fields.name).clear().type(name)
-    cy.get(coinFormObj.fields.symbol).clear().type(symbol)
-    cy.get(coinFormObj.fields.price).clear().type('100')
-    cy.get(coinFormObj.fields.category).select('L1')
+    cy.uiType(coinFormObj.fields.name, name)
+    cy.uiType(coinFormObj.fields.symbol, symbol)
+    cy.uiType(coinFormObj.fields.price, '100')
+    cy.uiSelect(coinFormObj.fields.category, 'L1')
   },
 
   submit: () => {
-    cy.get(coinFormObj.fields.submit).click()
+    cy.uiClick(coinFormObj.fields.submit)
   },
 
   verifyShellReady: () => {

@@ -11,8 +11,7 @@ import { buildCoin } from '../../support/utils/resources/coin-builders'
 
 describe('Markets admin delete', { tags: ['@markets'] }, () => {
   beforeEach(() => {
-    cy.resetBackend()
-    cy.login(users.admin)
+    cy.resetAndLogin(users.admin)
   })
 
   it('deletes an API-seeded coin through the markets table', () => {

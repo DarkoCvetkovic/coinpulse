@@ -1,3 +1,4 @@
+import { seedCoins } from '../../support/constants/coins'
 import { users } from '../../support/constants/users'
 import {
   action_addCoinByDoubleClick,
@@ -15,36 +16,26 @@ import {
 } from '../../support/keywords/compare.keywords'
 
 describe('Compare results', { tags: ['@compare'] }, () => {
-  const btc = 'BTC'
-  const eth = 'ETH'
+  const btc = seedCoins.btc
+  const eth = seedCoins.eth
 
   beforeEach(() => {
-    cy.resetBackend()
-    cy.login(users.standard)
+    cy.resetAndLogin(users.standard)
     action_openCompare()
-    action_addCoinByDoubleClick(btc)
-    action_addCoinByDoubleClick(eth)
+    action_addCoinByDoubleClick(btc.symbol)
+    action_addCoinByDoubleClick(eth.symbol)
     check_resultsShown()
   })
 
   it('shows seeded metrics for the compared coins in the overview table', () => {
-    const btcName = 'Bitcoin'
-    const ethName = 'Ethereum'
-    const btcPrice = '$64,250.00'
-    const btcChange = '+2.45%'
-    const btcRank = '#1'
-    const btcCategory = 'L1'
-    const btcLaunchDate = '2009-01-03'
-    const ethPrice = '$3,480.50'
-
-    check_overviewColumn(btc, btcName)
-    check_overviewColumn(eth, ethName)
-    check_overviewValue('price', btc, btcPrice)
-    check_overviewValue('change24h', btc, btcChange)
-    check_overviewValue('rank', btc, btcRank)
-    check_overviewValue('category', btc, btcCategory)
-    check_overviewValue('launchDate', btc, btcLaunchDate)
-    check_overviewValue('price', eth, ethPrice)
+    check_overviewColumn(btc.symbol, btc.name)
+    check_overviewColumn(eth.symbol, eth.name)
+    check_overviewValue('price', btc.symbol, btc.price)
+    check_overviewValue('change24h', btc.symbol, btc.change24h)
+    check_overviewValue('rank', btc.symbol, btc.rank)
+    check_overviewValue('category', btc.symbol, btc.category)
+    check_overviewValue('launchDate', btc.symbol, btc.launchDate)
+    check_overviewValue('price', eth.symbol, eth.price)
   })
 
   it('explains the price metric through its tooltip', () => {
@@ -57,19 +48,16 @@ describe('Compare results', { tags: ['@compare'] }, () => {
     const comparedCount = 2
 
     action_selectCompareTab('chart')
-
     check_chartsRendered(comparedCount)
   })
 
   it('lists deterministic headlines on the news tab', () => {
-    const btcId = 1
-    const btcHeadline = 'Bitcoin climbs 2.45% in 24 hours'
-    const btcSecondHeadline = 'What BTC holders should know about the L1 sector'
+    const btcHeadline = `${btc.name} climbs 2.45% in 24 hours`
+    const btcSecondHeadline = `What ${btc.symbol} holders should know about the ${btc.category} sector`
 
     action_selectCompareTab('news')
-
-    check_newsHeadline(btcId, 1, btcHeadline)
-    check_newsHeadline(btcId, 2, btcSecondHeadline)
+    check_newsHeadline(btc.id, 1, btcHeadline)
+    check_newsHeadline(btc.id, 2, btcSecondHeadline)
   })
 
   it('expands and collapses an FAQ answer', () => {

@@ -1,3 +1,4 @@
+import { seedCoins, seedWatchlistSymbols } from '../../support/constants/coins'
 import { users } from '../../support/constants/users'
 import {
   action_addCoinByDoubleClick,
@@ -10,11 +11,10 @@ import {
 } from '../../support/keywords/compare.keywords'
 
 describe('Compare watchlist', { tags: ['@compare'] }, () => {
-  const seededWatchlist = ['BTC', 'ETH', 'SOL', 'LINK']
+  const seededWatchlist = seedWatchlistSymbols
 
   beforeEach(() => {
-    cy.resetBackend()
-    cy.login(users.standard)
+    cy.resetAndLogin(users.standard)
     action_openCompare()
   })
 
@@ -24,20 +24,23 @@ describe('Compare watchlist', { tags: ['@compare'] }, () => {
   })
 
   it('reorders the watchlist by dragging a coin onto another', () => {
-    const reordered = ['SOL', 'BTC', 'ETH', 'LINK']
+    const reordered = [
+      seedCoins.sol.symbol,
+      seedCoins.btc.symbol,
+      seedCoins.eth.symbol,
+      seedCoins.link.symbol,
+    ]
 
-    action_reorderWatchlist('SOL', 'BTC')
-
+    action_reorderWatchlist(seedCoins.sol.symbol, seedCoins.btc.symbol)
     check_watchlistOrder(reordered)
   })
 
   it('removes a coin from the watchlist and the comparison via the context menu', () => {
-    const removed = 'ETH'
-    const remaining = ['BTC', 'SOL', 'LINK']
+    const removed = seedCoins.eth.symbol
+    const remaining = [seedCoins.btc.symbol, seedCoins.sol.symbol, seedCoins.link.symbol]
 
     action_addCoinByDoubleClick(removed)
     action_removeCoinFromWatchlist(removed)
-
     check_watchlistShowsCoins(remaining)
     check_coinNotCompared(removed)
   })

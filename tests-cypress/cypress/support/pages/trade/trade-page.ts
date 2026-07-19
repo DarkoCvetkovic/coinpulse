@@ -43,33 +43,33 @@ export const tradePage = {
       .find('option')
       .eq(1)
       .then(option => {
-        cy.get(tradeObj.fields.coin).select(String(option.val()))
+        cy.uiSelect(tradeObj.fields.coin, String(option.val()))
       })
     cy.get(tradeObj.marketPrice).should('be.visible')
   },
 
   selectType: (type: 'buy' | 'sell') => {
-    cy.get(type === 'buy' ? tradeObj.fields.typeBuy : tradeObj.fields.typeSell).check()
+    cy.uiCheck(type === 'buy' ? tradeObj.fields.typeBuy : tradeObj.fields.typeSell)
   },
 
   enterAmount: (amount: string) => {
-    cy.get(tradeObj.fields.amount).clear().type(amount)
+    cy.uiType(tradeObj.fields.amount, amount)
   },
 
   enterPrice: (price: string) => {
-    cy.get(tradeObj.fields.price).clear().type(price)
+    cy.uiType(tradeObj.fields.price, price)
   },
 
   enterNote: (note: string) => {
-    cy.get(tradeObj.fields.note).clear().type(note)
+    cy.uiType(tradeObj.fields.note, note)
   },
 
   confirm: () => {
-    cy.get(tradeObj.fields.confirm).check()
+    cy.uiCheck(tradeObj.fields.confirm)
   },
 
   submit: () => {
-    cy.get(tradeObj.fields.submit).click()
+    cy.uiClick(tradeObj.fields.submit)
   },
 
   verifyShellReady: () => {

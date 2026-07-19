@@ -10,8 +10,7 @@ import {
 
 describe('Files logo upload', { tags: ['@files'] }, () => {
   it('uploads a valid logo as an admin', () => {
-    cy.resetBackend()
-    cy.login(users.admin)
+    cy.resetAndLogin(users.admin)
     action_openFiles()
     action_uploadValidLogo()
     check_logoUploadSucceeded()

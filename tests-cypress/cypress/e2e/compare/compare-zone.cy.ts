@@ -1,3 +1,4 @@
+import { seedCoins } from '../../support/constants/coins'
 import { users } from '../../support/constants/users'
 import {
   action_addCoinByContextMenu,
@@ -15,14 +16,13 @@ import {
 } from '../../support/keywords/compare.keywords'
 
 describe('Compare zone builder', { tags: ['@compare'] }, () => {
-  const btc = 'BTC'
-  const eth = 'ETH'
-  const sol = 'SOL'
-  const link = 'LINK'
+  const btc = seedCoins.btc.symbol
+  const eth = seedCoins.eth.symbol
+  const sol = seedCoins.sol.symbol
+  const link = seedCoins.link.symbol
 
   beforeEach(() => {
-    cy.resetBackend()
-    cy.login(users.standard)
+    cy.resetAndLogin(users.standard)
     action_openCompare()
   })
 

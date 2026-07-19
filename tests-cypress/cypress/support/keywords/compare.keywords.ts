@@ -6,6 +6,12 @@ export function action_openCompare() {
   comparePage.visit()
 }
 
+export function check_compareShellReady() {
+  cy.log('Verify the compare page shell is rendered')
+
+  comparePage.verifyShellReady()
+}
+
 export function action_addCoinByDoubleClick(symbol: string) {
   cy.log(`Add coin ${symbol} to the compare zone by double-click`)
 

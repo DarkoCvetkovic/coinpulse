@@ -1,3 +1,11 @@
+/**
+ * Smoke: login page.
+ *
+ * Verifies the login form renders interactive and that valid credentials
+ * sign in and land on the dashboard.
+ *
+ * Estimated execution time: ~2s.
+ */
 import { users } from '../../support/constants/users'
 import {
   action_loginViaUi,

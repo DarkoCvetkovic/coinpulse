@@ -38,45 +38,45 @@ export const marketsPage = {
   },
 
   search: (term: string) => {
-    cy.get(marketsObj.search).clear().type(term)
+    cy.uiType(marketsObj.search, term)
   },
 
   filterByCategory: (category: string) => {
-    cy.get(marketsObj.filterCategory).select(category)
+    cy.uiSelect(marketsObj.filterCategory, category)
   },
 
   filterByStatus: (status: string) => {
-    cy.get(marketsObj.filterStatus).select(status)
+    cy.uiSelect(marketsObj.filterStatus, status)
   },
 
   setPageSize: (size: string) => {
-    cy.get(marketsObj.pageSize).select(size)
+    cy.uiSelect(marketsObj.pageSize, size)
   },
 
   sortBy: (column: string) => {
-    cy.get(marketsObj.sortHeader(column)).click()
+    cy.uiClick(marketsObj.sortHeader(column))
   },
 
   goToNextPage: () => {
-    cy.get(marketsObj.pagination.next).click()
+    cy.uiClick(marketsObj.pagination.next)
   },
 
   toggleWatchlist: (symbol: string) => {
-    cy.get(marketsObj.watchlistToggle(symbol)).click()
+    cy.uiClick(marketsObj.watchlistToggle(symbol))
   },
 
   openDeleteModal: (symbol: string) => {
-    cy.get(marketsObj.deleteButton(symbol)).click()
+    cy.uiClick(marketsObj.deleteButton(symbol))
     cy.get(marketsObj.deleteModal.modal).should('be.visible')
   },
 
   cancelDelete: () => {
-    cy.get(marketsObj.deleteModal.cancel).click()
+    cy.uiClick(marketsObj.deleteModal.cancel)
     cy.get(marketsObj.deleteModal.modal).should('not.exist')
   },
 
   confirmDelete: () => {
-    cy.get(marketsObj.deleteModal.confirm).click()
+    cy.uiClick(marketsObj.deleteModal.confirm)
     cy.get(marketsObj.deleteModal.modal).should('not.exist')
   },
 

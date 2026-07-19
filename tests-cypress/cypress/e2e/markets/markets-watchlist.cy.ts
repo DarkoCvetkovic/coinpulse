@@ -1,3 +1,4 @@
+import { seedCoins } from '../../support/constants/coins'
 import { users } from '../../support/constants/users'
 import {
   action_openMarkets,
@@ -7,11 +8,10 @@ import {
 } from '../../support/keywords/markets.keywords'
 
 describe('Markets watchlist', { tags: ['@markets'] }, () => {
-  const watchlistedSymbol = 'BTC'
+  const watchlistedSymbol = seedCoins.btc.symbol
 
   beforeEach(() => {
-    cy.resetBackend()
-    cy.login(users.standard)
+    cy.resetAndLogin(users.standard)
     action_openMarkets()
   })
 

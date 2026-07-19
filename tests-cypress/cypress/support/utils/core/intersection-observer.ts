@@ -1,18 +1,9 @@
-// Headless test runners (Cypress `run`, the preview renderer) do not deliver
-// IntersectionObserver callbacks on a programmatic scroll - even when the element is
-// geometrically in view - and programmatic scroll does not reliably fire `scroll`
-// events either. Only getBoundingClientRect geometry is dependable. So an IO-driven
-// lazy list never loads under automation. This installs a drop-in replacement, before
-// the app boots (cy.visit onBeforeLoad), that the test drives explicitly:
-//   - the deferred initial check and `scroll` events use real geometry, so the list
-//     does NOT auto-load below the fold (the "first batch only" assertion stays valid),
-//   - triggerLazyCheck dispatches an event that forces an intersection, loading the
-//     next batch deterministically regardless of how the runner scrolls.
-
 const RECHECK_EVENT = 'cypress:io-recheck'
 
-// Marker set on the AUT window so a spec can assert the shim really installed
-// (otherwise an onBeforeLoad that never ran would only show up as a confusing count).
+/**
+ * Marker property set on the AUT window so a test can assert the shim really
+ * installed before relying on it.
+ */
 export const LAZY_SHIM_FLAG = '__coinpulseLazyShim'
 
 interface FakeEntry {
@@ -23,6 +14,20 @@ interface FakeEntry {
 
 type FakeCallback = (entries: FakeEntry[], observer: unknown) => void
 
+/**
+ * Replaces the native IntersectionObserver on the AUT window with a
+ * geometry-driven shim, so tests can drive lazy-loading deterministically.
+ *
+ * Headless runners (cypress run) do not deliver IntersectionObserver callbacks
+ * on a programmatic scroll, even when the target is geometrically in view, so
+ * an IO-driven lazy list never loads under automation. The shim recomputes the
+ * intersection from getBoundingClientRect on real scroll events and on an
+ * explicit re-check event that {@link triggerLazyCheck} dispatches. The initial
+ * check after observe() is deferred and geometry-based, so content below the
+ * fold does not auto-load and "first batch only" assertions stay valid.
+ *
+ * Install it in cy.visit's onBeforeLoad, before the app boots.
+ */
 export function installScrollDrivenIntersectionObserver(win: Cypress.AUTWindow) {
   class ScrollDrivenIntersectionObserver {
     private readonly callback: FakeCallback
@@ -38,8 +43,6 @@ export function installScrollDrivenIntersectionObserver(win: Cypress.AUTWindow) 
 
     observe(target: Element) {
       this.targets.add(target)
-      // Defer so the app has painted its first batch before the initial check,
-      // matching the native observer (which would not auto-load below the fold).
       win.setTimeout(() => this.emit(target, false), 0)
     }
 
@@ -68,7 +71,6 @@ export function installScrollDrivenIntersectionObserver(win: Cypress.AUTWindow) 
   try {
     win.IntersectionObserver = Observer
   } catch {
-    // Some runners expose IntersectionObserver as a read-only global; force it.
     Object.defineProperty(win, 'IntersectionObserver', {
       configurable: true,
       writable: true,
@@ -78,6 +80,10 @@ export function installScrollDrivenIntersectionObserver(win: Cypress.AUTWindow) 
   ;(win as unknown as Record<string, boolean>)[LAZY_SHIM_FLAG] = true
 }
 
+/**
+ * Forces every observer created by the shim to re-emit as intersecting,
+ * loading the next lazy batch regardless of how the runner scrolled.
+ */
 export function triggerLazyCheck(win: Cypress.AUTWindow) {
   win.dispatchEvent(new win.Event(RECHECK_EVENT))
 }

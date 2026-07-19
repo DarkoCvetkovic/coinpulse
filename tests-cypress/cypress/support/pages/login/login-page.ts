@@ -26,19 +26,19 @@ export const loginPage = {
   },
 
   typeUsername: (value: string) => {
-    cy.get(loginObj.form.username).clear().type(value)
+    cy.uiType(loginObj.form.username, value)
   },
 
   typePassword: (value: string) => {
-    cy.get(loginObj.form.password).clear().type(value, { log: false })
+    cy.uiType(loginObj.form.password, value, { log: false })
   },
 
   enableRememberMe: () => {
-    cy.get(loginObj.form.rememberMe).check()
+    cy.uiCheck(loginObj.form.rememberMe)
   },
 
   submit: () => {
-    cy.get(loginObj.form.submit).click()
+    cy.uiClick(loginObj.form.submit)
   },
 
   verifyShellReady: () => {

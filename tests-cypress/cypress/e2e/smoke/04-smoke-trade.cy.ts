@@ -1,3 +1,10 @@
+/**
+ * Smoke: trade page.
+ *
+ * Signs in as standard_user and verifies the trade form renders.
+ *
+ * Estimated execution time: ~1s.
+ */
 import { users } from '../../support/constants/users'
 import { action_openTrade, check_tradeShellReady } from '../../support/keywords/trade.keywords'
 

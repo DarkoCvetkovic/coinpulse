@@ -10,7 +10,6 @@ describe('Login server errors', { tags: ['@auth'] }, () => {
     const wrongPasswordUser = { username: users.standard.username, password: wrongPassword }
 
     action_loginViaUi(wrongPasswordUser)
-
     check_loginServerError(invalidCredentialsMessage)
   })
 
@@ -18,13 +17,11 @@ describe('Login server errors', { tags: ['@auth'] }, () => {
     const unknownUser = { username: 'ghost_user', password: wrongPassword }
 
     action_loginViaUi(unknownUser)
-
     check_loginServerError(invalidCredentialsMessage)
   })
 
   it('explains that a locked account cannot sign in', () => {
     action_loginViaUi(users.locked)
-
     check_loginServerError(lockedAccountMessage)
   })
 })

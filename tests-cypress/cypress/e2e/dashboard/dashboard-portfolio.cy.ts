@@ -7,8 +7,7 @@ import {
 
 describe('Dashboard portfolio summary', { tags: ['@dashboard'] }, () => {
   beforeEach(() => {
-    cy.resetBackend()
-    cy.login(users.standard)
+    cy.resetAndLogin(users.standard)
   })
 
   it('shows the seeded transaction and watchlist counts', () => {

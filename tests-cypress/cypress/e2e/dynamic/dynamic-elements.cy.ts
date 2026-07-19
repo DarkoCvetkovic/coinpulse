@@ -1,3 +1,4 @@
+import { seedCoinCount, seedCoins } from '../../support/constants/coins'
 import { users } from '../../support/constants/users'
 import {
   action_openDynamic,
@@ -13,13 +14,12 @@ import {
 
 describe('Dynamic elements', { tags: ['@dynamic'] }, () => {
   beforeEach(() => {
-    cy.resetBackend()
-    cy.login(users.standard)
+    cy.resetAndLogin(users.standard)
     action_openDynamic()
   })
 
   it('advances the live price ticker for the top coin', () => {
-    const topSymbol = 'BTC'
+    const topSymbol = seedCoins.btc.symbol
 
     check_tickerAdvances(topSymbol)
   })
@@ -53,7 +53,7 @@ describe('Dynamic elements', { tags: ['@dynamic'] }, () => {
   })
 
   it('eventually lazy-loads every seeded coin', () => {
-    const totalCoins = 20
+    const totalCoins = seedCoinCount
     const batchSize = 5
 
     check_lazyListLoadsAllCoins(totalCoins, batchSize)

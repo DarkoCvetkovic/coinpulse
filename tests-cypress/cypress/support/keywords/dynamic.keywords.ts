@@ -6,6 +6,12 @@ export function action_openDynamic() {
   dynamicPage.visit()
 }
 
+export function check_dynamicShellReady() {
+  cy.log('Verify the dynamic elements page shell is rendered')
+
+  dynamicPage.verifyShellReady()
+}
+
 export function check_tickerAdvances(symbol: string) {
   cy.log(`Verify the live ticker shows ${symbol} and its update counter advances`)
 

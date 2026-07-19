@@ -37,7 +37,7 @@ export const filesPage = {
       .find('option')
       .eq(1)
       .then(option => {
-        cy.get(filesObj.upload.coin).select(String(option.val()))
+        cy.uiSelect(filesObj.upload.coin, String(option.val()))
       })
   },
 
@@ -61,15 +61,15 @@ export const filesPage = {
   },
 
   submitUpload: () => {
-    cy.get(filesObj.upload.submit).click()
+    cy.uiClick(filesObj.upload.submit)
   },
 
   downloadCsv: () => {
-    cy.get(filesObj.download.csv).click()
+    cy.uiClick(filesObj.download.csv)
   },
 
   downloadJson: () => {
-    cy.get(filesObj.download.json).click()
+    cy.uiClick(filesObj.download.json)
   },
 
   verifyShellReady: () => {

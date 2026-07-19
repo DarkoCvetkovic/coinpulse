@@ -1,3 +1,4 @@
+import { seedCoins } from '../../support/constants/coins'
 import { users } from '../../support/constants/users'
 import {
   action_openMarkets,
@@ -13,7 +14,7 @@ describe('Markets sorting', { tags: ['@markets'] }, () => {
   })
 
   it('lists coins by rank ascending by default with BTC first', () => {
-    const topRankedSymbol = 'BTC'
+    const topRankedSymbol = seedCoins.btc.symbol
 
     check_firstCoinRow(topRankedSymbol)
   })

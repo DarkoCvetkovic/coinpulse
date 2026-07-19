@@ -7,8 +7,7 @@ import {
 
 describe('Trade execution', { tags: ['@trade'] }, () => {
   beforeEach(() => {
-    cy.resetBackend()
-    cy.login(users.standard)
+    cy.resetAndLogin(users.standard)
     action_openTrade()
   })
 

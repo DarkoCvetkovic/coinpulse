@@ -25,7 +25,7 @@ export const apiExplorerPage = {
   },
 
   run: (key: string) => {
-    cy.get(apiExplorerObj.runButton(key)).click()
+    cy.uiClick(apiExplorerObj.runButton(key))
   },
 
   verifyShellReady: () => {

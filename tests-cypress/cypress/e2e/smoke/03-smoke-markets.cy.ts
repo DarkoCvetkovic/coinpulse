@@ -1,3 +1,11 @@
+/**
+ * Smoke: markets page.
+ *
+ * Signs in as standard_user and verifies the markets table, search and
+ * filters render.
+ *
+ * Estimated execution time: ~1s.
+ */
 import { users } from '../../support/constants/users'
 import {
   action_openMarkets,

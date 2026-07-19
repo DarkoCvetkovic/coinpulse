@@ -58,6 +58,12 @@ export const comparePage = {
     cy.get(compareObj.watchlist.list).should('be.visible')
   },
 
+  verifyShellReady: () => {
+    cy.get(compareObj.watchlist.card).should('be.visible')
+    cy.get(compareObj.zone.card).should('be.visible')
+    cy.get(compareObj.zone.dropArea).should('be.visible')
+  },
+
   verifyWatchlistCoin: (symbol: string) => {
     cy.get(compareObj.watchlist.item(symbol)).should('be.visible')
   },
@@ -81,29 +87,29 @@ export const comparePage = {
   },
 
   addByDoubleClick: (symbol: string) => {
-    cy.get(compareObj.watchlist.item(symbol)).dblclick()
+    cy.uiDblClick(compareObj.watchlist.item(symbol))
   },
 
   addByDragAndDrop: (symbol: string) => {
-    cy.get(compareObj.watchlist.item(symbol)).trigger('dragstart')
-    cy.get(compareObj.zone.dropArea).trigger('drop')
+    cy.uiTrigger(compareObj.watchlist.item(symbol), 'dragstart')
+    cy.uiTrigger(compareObj.zone.dropArea, 'drop')
   },
 
   addByContextMenu: (symbol: string) => {
-    cy.get(compareObj.watchlist.item(symbol)).rightclick()
+    cy.uiRightClick(compareObj.watchlist.item(symbol))
     cy.get(compareObj.contextMenu.menu).should('be.visible')
-    cy.get(compareObj.contextMenu.addCompare).click()
+    cy.uiClick(compareObj.contextMenu.addCompare)
     cy.get(compareObj.contextMenu.menu).should('not.exist')
   },
 
   reorderByDrag: (fromSymbol: string, toSymbol: string) => {
-    cy.get(compareObj.watchlist.item(fromSymbol)).trigger('dragstart')
-    cy.get(compareObj.watchlist.item(toSymbol)).trigger('drop')
+    cy.uiTrigger(compareObj.watchlist.item(fromSymbol), 'dragstart')
+    cy.uiTrigger(compareObj.watchlist.item(toSymbol), 'drop')
   },
 
   removeFromWatchlistViaMenu: (symbol: string) => {
-    cy.get(compareObj.watchlist.item(symbol)).rightclick()
-    cy.get(compareObj.contextMenu.removeWatchlist).click()
+    cy.uiRightClick(compareObj.watchlist.item(symbol))
+    cy.uiClick(compareObj.contextMenu.removeWatchlist)
     cy.get(compareObj.watchlist.item(symbol)).should('not.exist')
   },
 
@@ -120,7 +126,7 @@ export const comparePage = {
   },
 
   removeChip: (symbol: string) => {
-    cy.get(compareObj.zone.chipRemove(symbol)).click()
+    cy.uiClick(compareObj.zone.chipRemove(symbol))
   },
 
   verifyLimitModalShown: () => {
@@ -128,22 +134,22 @@ export const comparePage = {
   },
 
   closeLimitModal: () => {
-    cy.get(compareObj.limitModal.ok).click()
+    cy.uiClick(compareObj.limitModal.ok)
     cy.get(compareObj.limitModal.modal).should('not.exist')
   },
 
   openClearModal: () => {
-    cy.get(compareObj.zone.clearButton).click()
+    cy.uiClick(compareObj.zone.clearButton)
     cy.get(compareObj.clearModal.modal).should('be.visible')
   },
 
   cancelClear: () => {
-    cy.get(compareObj.clearModal.cancel).click()
+    cy.uiClick(compareObj.clearModal.cancel)
     cy.get(compareObj.clearModal.modal).should('not.exist')
   },
 
   confirmClear: () => {
-    cy.get(compareObj.clearModal.confirm).click()
+    cy.uiClick(compareObj.clearModal.confirm)
     cy.get(compareObj.clearModal.modal).should('not.exist')
   },
 
@@ -156,7 +162,7 @@ export const comparePage = {
   },
 
   selectTab: (key: string) => {
-    cy.get(compareObj.results.tab(key)).click()
+    cy.uiClick(compareObj.results.tab(key))
   },
 
   verifyOverviewColumn: (symbol: string, coinName: string) => {
@@ -168,7 +174,6 @@ export const comparePage = {
   },
 
   verifyMetricTooltip: (metric: string, text: string) => {
-    // The bubble is CSS hover-only, so assert its content instead of visibility.
     cy.get(compareObj.results.tooltipBubble(metric)).should('contain.text', text)
   },
 
@@ -183,7 +188,7 @@ export const comparePage = {
   },
 
   toggleFaq: (key: string) => {
-    cy.get(compareObj.faq.toggle(key)).click()
+    cy.uiClick(compareObj.faq.toggle(key))
   },
 
   verifyFaqAnswerShown: (key: string, textFragment: string) => {

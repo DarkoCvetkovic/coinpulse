@@ -37,6 +37,11 @@ export const dynamicObj = {
   },
 }
 
+const externalLinkAttrs = {
+  target: '_blank',
+  rel: 'noopener noreferrer',
+}
+
 export const dynamicPage = {
   visit: () => {
     cy.visit(routes.dynamic, {
@@ -44,6 +49,12 @@ export const dynamicPage = {
     })
     cy.get(dynamicObj.page).should('be.visible')
     cy.window().its(LAZY_SHIM_FLAG).should('eq', true)
+  },
+
+  verifyShellReady: () => {
+    cy.get(dynamicObj.ticker.card).should('be.visible')
+    cy.get(dynamicObj.delayed.button).should('be.visible')
+    cy.get(dynamicObj.lazy.list).should('be.visible')
   },
 
   verifyTickerCoin: (symbol: string) => {
@@ -55,7 +66,7 @@ export const dynamicPage = {
     cy.get(dynamicObj.ticker.count)
       .invoke('text')
       .then(initial => {
-        cy.get(dynamicObj.ticker.count, { timeout: 8000 }).should(el => {
+        cy.get(dynamicObj.ticker.count).should(el => {
           expect(Number(el.text())).to.be.greaterThan(Number(initial))
         })
       })
@@ -66,7 +77,8 @@ export const dynamicPage = {
   },
 
   clickDelayedButtonWhenReady: () => {
-    cy.get(dynamicObj.delayed.button, { timeout: 8000 }).should('not.be.disabled').click()
+    cy.get(dynamicObj.delayed.button).should('not.be.disabled')
+    cy.uiClick(dynamicObj.delayed.button)
   },
 
   verifyDelayedSuccess: () => {
@@ -95,13 +107,10 @@ export const dynamicPage = {
   },
 
   loadMoreLazyCoins: (expectedCount: number) => {
-    // Wait for the first batch to render: once items are in the DOM the app has
-    // already registered its observer, so the forced re-check cannot fire into
-    // the void while the coins fetch is still in flight.
     cy.get(dynamicObj.lazy.items).should('have.length.at.least', 1)
-    cy.get(dynamicObj.lazy.sentinel).scrollIntoView()
+    cy.uiScrollIntoView(dynamicObj.lazy.sentinel)
     cy.window().then(triggerLazyCheck)
-    cy.get(dynamicObj.lazy.items, { timeout: 8000 }).should('have.length', expectedCount)
+    cy.get(dynamicObj.lazy.items).should('have.length', expectedCount)
   },
 
   loadAllLazyCoins: (total: number, batch: number) => {
@@ -109,9 +118,9 @@ export const dynamicPage = {
     const loads = Math.ceil((total - batch) / batch)
     for (let i = 0; i < loads; i += 1) {
       const expected = Math.min(batch * (i + 2), total)
-      cy.get(dynamicObj.lazy.sentinel).scrollIntoView()
+      cy.uiScrollIntoView(dynamicObj.lazy.sentinel)
       cy.window().then(triggerLazyCheck)
-      cy.get(dynamicObj.lazy.items, { timeout: 8000 }).should('have.length', expected)
+      cy.get(dynamicObj.lazy.items).should('have.length', expected)
     }
     cy.get(dynamicObj.lazy.done).should('be.visible')
   },
@@ -119,7 +128,7 @@ export const dynamicPage = {
   verifyExternalLink: (href: string) => {
     cy.get(dynamicObj.external.link)
       .should('have.attr', 'href', href)
-      .and('have.attr', 'target', '_blank')
-      .and('have.attr', 'rel', 'noopener noreferrer')
+      .and('have.attr', 'target', externalLinkAttrs.target)
+      .and('have.attr', 'rel', externalLinkAttrs.rel)
   },
 }

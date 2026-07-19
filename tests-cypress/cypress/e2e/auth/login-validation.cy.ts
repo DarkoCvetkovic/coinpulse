@@ -19,7 +19,6 @@ describe('Login validation', { tags: ['@auth'] }, () => {
 
   it('requires both fields when the form is submitted empty', () => {
     action_submitEmptyLoginForm()
-
     check_loginValidationErrors()
     check_usernameRequiredError(usernameRequired)
     check_passwordRequiredError(passwordRequired)
@@ -29,7 +28,6 @@ describe('Login validation', { tags: ['@auth'] }, () => {
     const usernameOnly = { username: users.standard.username, password: '' }
 
     action_submitLoginForm(usernameOnly)
-
     check_passwordRequiredError(passwordRequired)
     check_noUsernameError()
   })

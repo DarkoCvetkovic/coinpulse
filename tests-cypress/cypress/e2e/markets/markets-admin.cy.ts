@@ -1,3 +1,4 @@
+import { seedCoins } from '../../support/constants/coins'
 import { users } from '../../support/constants/users'
 import {
   action_cancelDeleteCoin,
@@ -8,7 +9,7 @@ import {
 } from '../../support/keywords/markets.keywords'
 
 describe('Markets admin controls', { tags: ['@markets'] }, () => {
-  const coinSymbol = 'BTC'
+  const coinSymbol = seedCoins.btc.symbol
 
   it('hides admin controls for a standard user', () => {
     cy.login(users.standard)

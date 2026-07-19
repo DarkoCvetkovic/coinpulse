@@ -1,3 +1,4 @@
+import { seedCoins } from '../../support/constants/coins'
 import { users } from '../../support/constants/users'
 import {
   action_openMarkets,
@@ -14,8 +15,8 @@ describe('Markets search', { tags: ['@markets'] }, () => {
   })
 
   it('filters the table to a coin matched by symbol', () => {
-    const searchSymbol = 'ETH'
-    const otherSymbol = 'BTC'
+    const searchSymbol = seedCoins.eth.symbol
+    const otherSymbol = seedCoins.btc.symbol
 
     action_searchCoins(searchSymbol)
     check_coinRowVisible(searchSymbol)

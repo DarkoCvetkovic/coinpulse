@@ -30,3 +30,8 @@ Cypress.Commands.add('login', (credentials: LoginCredentials = users.standard) =
 Cypress.Commands.add('resetBackend', () => {
   cy.request('POST', backendUrl(apiPaths.reset)).its('status').should('eq', 200)
 })
+
+Cypress.Commands.add('resetAndLogin', (credentials: LoginCredentials = users.standard) => {
+  cy.resetBackend()
+  cy.login(credentials)
+})

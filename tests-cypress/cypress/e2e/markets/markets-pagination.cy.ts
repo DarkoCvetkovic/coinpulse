@@ -1,3 +1,4 @@
+import { seedCoins } from '../../support/constants/coins'
 import { users } from '../../support/constants/users'
 import {
   action_goToNextMarketsPage,
@@ -16,7 +17,7 @@ describe('Markets pagination', { tags: ['@markets'] }, () => {
 
   it('moves to the next page of coins', () => {
     const pageSize = '5'
-    const firstPageSymbol = 'BTC'
+    const firstPageSymbol = seedCoins.btc.symbol
 
     action_setPageSize(pageSize)
     check_paginationVisible()

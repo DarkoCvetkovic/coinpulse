@@ -1,3 +1,4 @@
+import { seedCoins } from '../../support/constants/coins'
 import { users } from '../../support/constants/users'
 import {
   action_filterByStatus,
@@ -7,7 +8,7 @@ import {
 } from '../../support/keywords/markets.keywords'
 
 describe('Markets filtering', { tags: ['@markets'] }, () => {
-  const bitcoin = 'BTC'
+  const bitcoin = seedCoins.btc.symbol
   const terraClassic = 'LUNC'
 
   beforeEach(() => {

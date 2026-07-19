@@ -8,8 +8,7 @@ import { buildCoin } from '../../support/utils/resources/coin-builders'
 
 describe('Coin form edit', { tags: ['@coin-form'] }, () => {
   beforeEach(() => {
-    cy.resetBackend()
-    cy.login(users.admin)
+    cy.resetAndLogin(users.admin)
   })
 
   it('loads an existing coin into the edit form', () => {

@@ -12,15 +12,15 @@ import { randomSymbol } from '../../support/utils/core/random'
 
 describe('Coin form create', { tags: ['@coin-form'] }, () => {
   beforeEach(() => {
-    cy.resetBackend()
-    cy.login(users.admin)
+    cy.resetAndLogin(users.admin)
   })
 
   it('creates a coin and lists it in the markets table', () => {
     const symbol = randomSymbol()
+    const coinName = `Test Coin ${symbol}`
 
     action_openNewCoinForm()
-    action_submitNewCoin(`Test Coin ${symbol}`, symbol)
+    action_submitNewCoin(coinName, symbol)
     check_landedOnMarkets()
     action_searchCoins(symbol)
     check_coinRowVisible(symbol)

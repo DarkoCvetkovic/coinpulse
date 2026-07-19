@@ -7,6 +7,6 @@ export const headerObj = {
 
 export const headerPage = {
   logout: () => {
-    cy.get(headerObj.logoutButton).click()
+    cy.uiClick(headerObj.logoutButton)
   },
 }
