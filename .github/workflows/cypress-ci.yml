@@ -1,0 +1,48 @@
+name: Cypress CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tests-cypress/**'
+      - '.github/workflows/cypress-ci.yml'
+  pull_request:
+    paths:
+      - 'tests-cypress/**'
+      - '.github/workflows/cypress-ci.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests-cypress
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Node 24
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: tests-cypress/package-lock.json
+
+      - name: Install dependencies (no Cypress binary)
+        run: npm ci
+        env:
+          CYPRESS_INSTALL_BINARY: '0'
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
