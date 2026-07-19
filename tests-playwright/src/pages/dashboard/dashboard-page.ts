@@ -8,7 +8,9 @@ export class DashboardPage extends BasePage {
   readonly portfolioValue: Locator
   readonly change24h: Locator
   readonly watchlist: Locator
+  readonly watchlistValue: Locator
   readonly transactions: Locator
+  readonly transactionsValue: Locator
   readonly chartCard: Locator
   readonly gainers: Locator
   readonly losers: Locator
@@ -19,7 +21,9 @@ export class DashboardPage extends BasePage {
     this.portfolioValue = page.getByTestId('stat-portfolio-value')
     this.change24h = page.getByTestId('stat-24h-change')
     this.watchlist = page.getByTestId('stat-watchlist')
+    this.watchlistValue = page.getByTestId('stat-watchlist-value')
     this.transactions = page.getByTestId('stat-transactions')
+    this.transactionsValue = page.getByTestId('stat-transactions-value')
     this.chartCard = page.getByTestId('dashboard-chart-card')
     this.gainers = page.getByTestId('top-gainers')
     this.losers = page.getByTestId('top-losers')
@@ -38,5 +42,13 @@ export class DashboardPage extends BasePage {
     await expect(this.chartCard).toBeVisible()
     await expect(this.gainers).toBeVisible()
     await expect(this.losers).toBeVisible()
+  }
+
+  async verifyTransactionsCount(count: number): Promise<void> {
+    await expect(this.transactionsValue).toHaveText(String(count))
+  }
+
+  async verifyWatchlistCount(count: number): Promise<void> {
+    await expect(this.watchlistValue).toHaveText(String(count))
   }
 }

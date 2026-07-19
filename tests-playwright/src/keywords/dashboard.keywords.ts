@@ -12,3 +12,14 @@ export async function check_dashboardShellReady(dashboardPage: DashboardPage): P
     await dashboardPage.verifyShellReady()
   })
 }
+
+export async function check_portfolioStats(
+  dashboardPage: DashboardPage,
+  transactionCount: number,
+  watchlistCount: number,
+): Promise<void> {
+  await test.step(`Verify portfolio stats - transactions: ${transactionCount}, watchlist: ${watchlistCount}`, async () => {
+    await dashboardPage.verifyTransactionsCount(transactionCount)
+    await dashboardPage.verifyWatchlistCount(watchlistCount)
+  })
+}

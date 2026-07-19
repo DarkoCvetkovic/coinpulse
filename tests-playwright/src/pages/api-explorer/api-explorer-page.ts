@@ -8,6 +8,7 @@ export class ApiExplorerPage extends BasePage {
   readonly coinsGroup: Locator
   readonly simulationsGroup: Locator
   readonly emptyResponse: Locator
+  readonly responseStatus: Locator
 
   constructor(page: Page) {
     super(page)
@@ -15,6 +16,19 @@ export class ApiExplorerPage extends BasePage {
     this.coinsGroup = page.getByTestId('api-group-coins')
     this.simulationsGroup = page.getByTestId('api-group-simulations')
     this.emptyResponse = page.getByTestId('api-response-empty')
+    this.responseStatus = page.getByTestId('api-response-status')
+  }
+
+  runButton(key: string): Locator {
+    return this.page.getByTestId(`api-run-${key}`)
+  }
+
+  async run(key: string): Promise<void> {
+    await this.runButton(key).click()
+  }
+
+  async verifyResponseStatus(status: number): Promise<void> {
+    await expect(this.responseStatus).toContainText(String(status))
   }
 
   async open(): Promise<void> {
