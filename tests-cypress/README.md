@@ -13,18 +13,18 @@ seed data, same reports.
 
 27 specs / 76 tests across every page of the app:
 
-| Area           | Specs | What is covered                                                        |
-| -------------- | ----- | ---------------------------------------------------------------------- |
-| `smoke/`       | 9     | Every page shell renders for a signed-in user (one spec per page, JSDoc header with estimated execution time) |
-| `auth/`        | 3     | Field validation, wrong password, unknown user, locked account (423), route guard, redirect after login, logout |
-| `dashboard/`   | 1     | Portfolio stats, chart and top movers against seeded data               |
-| `markets/`     | 7     | Search, filtering, sorting, pagination, watchlist toggle, admin edit and delete |
-| `trade/`       | 2     | Buy/sell execution against the API and form validation                  |
-| `compare/`     | 3     | Drag and drop, right-click menu, three-coin limit, tabs, tooltips, FAQ accordion, watchlist reorder |
-| `coin-form/`   | 4     | Admin create/edit, validation, role guard                               |
-| `api-explorer/`| 1     | Request groups and live response panel                                  |
-| `files/`       | 2     | Logo upload and portfolio download                                      |
-| `dynamic/`     | 1     | Live ticker, delayed button, iframe, shadow DOM, lazy-loaded list       |
+| Area            | Specs | What is covered                                                                                                 |
+| --------------- | ----- | --------------------------------------------------------------------------------------------------------------- |
+| `smoke/`        | 9     | Every page shell renders for a signed-in user (one spec per page, JSDoc header with estimated execution time)   |
+| `auth/`         | 3     | Field validation, wrong password, unknown user, locked account (423), route guard, redirect after login, logout |
+| `dashboard/`    | 1     | Portfolio stats, chart and top movers against seeded data                                                       |
+| `markets/`      | 7     | Search, filtering, sorting, pagination, watchlist toggle, admin edit and delete                                 |
+| `trade/`        | 2     | Buy/sell execution against the API and form validation                                                          |
+| `compare/`      | 3     | Drag and drop, right-click menu, three-coin limit, tabs, tooltips, FAQ accordion, watchlist reorder             |
+| `coin-form/`    | 4     | Admin create/edit, validation, role guard                                                                       |
+| `api-explorer/` | 1     | Request groups and live response panel                                                                          |
+| `files/`        | 2     | Logo upload and portfolio download                                                                              |
+| `dynamic/`      | 1     | Live ticker, delayed button, iframe, shadow DOM, lazy-loaded list                                               |
 
 ## Architecture
 
@@ -63,13 +63,13 @@ endpoint. Specs that mutate data or assert seed facts reset the backend in
 
 ## Running locally
 
-| Command              | Description                                                    |
-| -------------------- | -------------------------------------------------------------- |
-| `npm run cy:open`    | Interactive runner                                             |
-| `npm run cy:run`     | All specs, headless (Mochawesome report in `cypress/reports/`) |
-| `npm run test:smoke` | Only the smoke specs (fast health check)                       |
-| `npm run test:<area>`| One area, e.g. `test:markets`, `test:auth`, `test:compare`     |
-| `npm run validate`   | Format check, lint and typecheck                               |
+| Command               | Description                                                    |
+| --------------------- | -------------------------------------------------------------- |
+| `npm run cy:open`     | Interactive runner                                             |
+| `npm run cy:run`      | All specs, headless (Mochawesome report in `cypress/reports/`) |
+| `npm run test:smoke`  | Only the smoke specs (fast health check)                       |
+| `npm run test:<area>` | One area, e.g. `test:markets`, `test:auth`, `test:compare`     |
+| `npm run validate`    | Format check, lint and typecheck                               |
 
 Every headless run writes a self-contained Mochawesome HTML report (embedded
 screenshots on failure) to `cypress/reports/`.
