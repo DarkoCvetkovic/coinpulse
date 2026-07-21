@@ -2,11 +2,9 @@ package com.coinpulse.selenium.smoke;
 
 import com.coinpulse.selenium.constants.Users;
 import com.coinpulse.selenium.core.BaseTest;
-import com.coinpulse.selenium.pages.DashboardPage;
-import com.coinpulse.selenium.pages.LoginPage;
+import com.coinpulse.selenium.keywords.LoginKeywords;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Smoke: login. Covers the interactive login form shell and a valid sign-in
@@ -15,24 +13,25 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class LoginSmokeTest extends BaseTest {
 
+    private LoginKeywords login;
+
+    @BeforeEach
+    void initKeywords() {
+        login = new LoginKeywords(driver);
+    }
+
     @Test
     void rendersAnInteractiveLoginForm() {
-        LoginPage loginPage = new LoginPage(driver).open();
-
-        assertThat(loginPage.isUsernameVisible()).isTrue();
-        assertThat(loginPage.isPasswordVisible()).isTrue();
-        assertThat(loginPage.isSubmitEnabled()).isTrue();
+        login.actionOpenLogin();
+        login.checkLoginShellReady();
     }
 
     @Test
     void signsInWithValidCredentialsAndLandsOnTheDashboard() {
         Users.Credentials standardUser = Users.standard();
-        LoginPage loginPage = new LoginPage(driver).open();
 
-        loginPage.loginAs(standardUser.username(), standardUser.password());
-
-        DashboardPage dashboardPage = new DashboardPage(driver).awaitLoaded();
-        assertThat(dashboardPage.isLoaded()).isTrue();
-        assertThat(driver.getCurrentUrl()).contains("/dashboard");
+        login.actionOpenLogin();
+        login.actionLogin(standardUser.username(), standardUser.password());
+        login.checkLandedOnDashboard();
     }
 }

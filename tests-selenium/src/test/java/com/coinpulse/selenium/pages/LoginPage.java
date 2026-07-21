@@ -1,5 +1,6 @@
 package com.coinpulse.selenium.pages;
 
+import com.coinpulse.selenium.constants.Routes;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -8,7 +9,6 @@ import org.openqa.selenium.WebDriver;
  */
 public class LoginPage extends BasePage {
 
-    private static final String PATH = "/login";
     private static final By FORM = byTestId("login-form");
     private static final By USERNAME = byTestId("login-username");
     private static final By PASSWORD = byTestId("login-password");
@@ -18,22 +18,15 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    public LoginPage open() {
-        openPath(PATH);
+    public void open() {
+        openPath(Routes.LOGIN);
         awaitVisible(FORM);
-        return this;
     }
 
-    public boolean isUsernameVisible() {
-        return isVisible(USERNAME);
-    }
-
-    public boolean isPasswordVisible() {
-        return isVisible(PASSWORD);
-    }
-
-    public boolean isSubmitEnabled() {
-        return awaitVisible(SUBMIT).isEnabled();
+    public void verifyShellReady() {
+        awaitVisible(USERNAME);
+        awaitVisible(PASSWORD);
+        awaitEnabled(SUBMIT);
     }
 
     public void loginAs(String username, String password) {

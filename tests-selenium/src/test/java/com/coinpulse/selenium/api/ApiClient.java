@@ -21,11 +21,17 @@ public final class ApiClient {
     }
 
     public static String loginToken(String username, String password) {
-        return given().baseUri(Config.apiUrl())
+        return loginSession(username, password).token();
+    }
+
+    public static AuthSession loginSession(String username, String password) {
+        var body = given().baseUri(Config.apiUrl())
                 .contentType(ContentType.JSON)
                 .body("{\"username\":\"%s\",\"password\":\"%s\"}".formatted(username, password))
                 .when().post("/api/auth/login")
                 .then().statusCode(200)
-                .extract().path("token");
+                .extract().body().jsonPath();
+        return new AuthSession(body.getString("token"), body.getString("username"),
+                body.getString("role"));
     }
 }

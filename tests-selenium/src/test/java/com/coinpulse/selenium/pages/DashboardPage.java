@@ -1,5 +1,6 @@
 package com.coinpulse.selenium.pages;
 
+import com.coinpulse.selenium.constants.Routes;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -9,17 +10,40 @@ import org.openqa.selenium.WebDriver;
 public class DashboardPage extends BasePage {
 
     private static final By PAGE = byTestId("dashboard-page");
+    private static final By STAT_PORTFOLIO_VALUE = byTestId("stat-portfolio-value");
+    private static final By STAT_24H_CHANGE = byTestId("stat-24h-change");
+    private static final By STAT_WATCHLIST = byTestId("stat-watchlist");
+    private static final By STAT_TRANSACTIONS = byTestId("stat-transactions");
+    private static final By CHART_CARD = byTestId("dashboard-chart-card");
+    private static final By TOP_GAINERS = byTestId("top-gainers");
+    private static final By TOP_LOSERS = byTestId("top-losers");
 
     public DashboardPage(WebDriver driver) {
         super(driver);
     }
 
-    public DashboardPage awaitLoaded() {
+    public void open() {
+        openPath(Routes.DASHBOARD);
         awaitVisible(PAGE);
-        return this;
     }
 
-    public boolean isLoaded() {
-        return awaitVisible(PAGE).isDisplayed();
+    public void awaitLoaded() {
+        awaitVisible(PAGE);
+    }
+
+    public void verifyStatsVisible() {
+        awaitVisible(STAT_PORTFOLIO_VALUE);
+        awaitVisible(STAT_24H_CHANGE);
+        awaitVisible(STAT_WATCHLIST);
+        awaitVisible(STAT_TRANSACTIONS);
+    }
+
+    public void verifyChartVisible() {
+        awaitVisible(CHART_CARD);
+    }
+
+    public void verifyTopMoversVisible() {
+        awaitVisible(TOP_GAINERS);
+        awaitVisible(TOP_LOSERS);
     }
 }

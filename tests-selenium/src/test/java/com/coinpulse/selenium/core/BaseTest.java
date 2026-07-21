@@ -1,6 +1,7 @@
 package com.coinpulse.selenium.core;
 
 import com.coinpulse.selenium.api.ApiClient;
+import com.coinpulse.selenium.constants.Users;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -21,6 +22,11 @@ public abstract class BaseTest {
     void startDriver() {
         ApiClient.resetBackend();
         driver = DriverFactory.create();
+    }
+
+    protected void loginViaApi(Users.Credentials credentials) {
+        Session.inject(driver,
+                ApiClient.loginSession(credentials.username(), credentials.password()));
     }
 
     @AfterEach

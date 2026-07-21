@@ -14,11 +14,12 @@ reporting. Drives the local frontend (http://localhost:5173) and backend
 
 ## Layout
 
-- `src/test/java/com/coinpulse/selenium/core` - Config, DriverFactory, BaseTest
+- `src/test/java/com/coinpulse/selenium/core` - Config, DriverFactory, BaseTest, Session
 - `.../pages` - page objects (data-testid locators, explicit waits only)
+- `.../keywords` - action/check keywords wrapped in Allure steps; tests call only these
 - `.../api` - REST-assured ApiClient (reset, login)
-- `.../constants` - seed users and data
-- `.../smoke` - fast shell checks per page
+- `.../constants` - routes and seed users
+- `.../smoke` - fast shell checks per page (sign-in via API + session injection)
 - `.../regression` - the deeper functional set
 
 ## Running
