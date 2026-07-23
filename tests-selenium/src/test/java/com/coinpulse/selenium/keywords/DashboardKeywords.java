@@ -19,6 +19,14 @@ public class DashboardKeywords {
         Allure.step("Open the dashboard", dashboardPage::open);
     }
 
+    public void checkPortfolioStats(int transactionCount, int watchlistCount) {
+        Allure.step("Verify portfolio stats - transactions: " + transactionCount
+                + ", watchlist: " + watchlistCount, () -> {
+            dashboardPage.verifyTransactionsCount(transactionCount);
+            dashboardPage.verifyWatchlistCount(watchlistCount);
+        });
+    }
+
     public void checkDashboardShellReady() {
         Allure.step("Verify the dashboard stat cards, price chart and top movers render", () -> {
             dashboardPage.verifyStatsVisible();

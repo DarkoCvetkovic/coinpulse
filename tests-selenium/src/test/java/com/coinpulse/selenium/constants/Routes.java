@@ -16,6 +16,10 @@ public final class Routes {
     public static final String DYNAMIC = "/dynamic";
     public static final String COIN_NEW = "/coins/new";
 
+    public static String coinEdit(long id) {
+        return "/coins/" + id + "/edit";
+    }
+
     private Routes() {
     }
 }

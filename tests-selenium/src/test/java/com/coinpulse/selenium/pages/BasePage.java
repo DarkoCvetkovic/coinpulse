@@ -4,7 +4,9 @@ import com.coinpulse.selenium.core.Config;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -53,5 +55,25 @@ public abstract class BasePage {
 
     protected boolean isVisible(By locator) {
         return awaitVisible(locator).isDisplayed();
+    }
+
+    protected void awaitAbsent(By locator) {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
+    protected void awaitTextContains(By locator, String text) {
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
+    }
+
+    protected void awaitPath(String path) {
+        wait.until(ExpectedConditions.urlContains(path));
+    }
+
+    protected void selectByValue(By locator, String value) {
+        new Select(awaitVisible(locator)).selectByValue(value);
+    }
+
+    protected void doubleClick(By locator) {
+        new Actions(driver).doubleClick(awaitEnabled(locator)).perform();
     }
 }

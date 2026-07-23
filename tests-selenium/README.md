@@ -17,10 +17,21 @@ reporting. Drives the local frontend (http://localhost:5173) and backend
 - `src/test/java/com/coinpulse/selenium/core` - Config, DriverFactory, BaseTest, Session
 - `.../pages` - page objects (data-testid locators, explicit waits only)
 - `.../keywords` - action/check keywords wrapped in Allure steps; tests call only these
-- `.../api` - REST-assured ApiClient (reset, login)
-- `.../constants` - routes and seed users
+- `.../api` - REST-assured ApiClient (reset, login, coin CRUD, transactions, watchlist)
+- `.../constants` - routes, seed users and seed coin facts
 - `.../smoke` - fast shell checks per page (sign-in via API + session injection)
-- `.../regression` - the deeper functional set
+- `.../regression` - the deeper functional set (auth, markets, trade, coin form,
+  compare, dashboard)
+- `.../hybrid` - API/UI integration tests: seed or verify over the API around UI steps
+
+## Coverage
+
+49 tests, all pages: 10 smoke, 33 regression, 6 hybrid. The regression set mirrors the
+key Cypress specs one for one (same names, same assertions); the hybrid set covers both
+directions - API changes showing up in the UI (created/deleted coins in the markets
+table) and UI actions confirmed over the API (trades in `/api/transactions`, star
+removal in `/api/watchlist`, coin deletion in `/api/coins`). Full headless Edge run
+takes about 2 minutes.
 
 ## Running
 
