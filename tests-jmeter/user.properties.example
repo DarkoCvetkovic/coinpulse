@@ -1,0 +1,4 @@
+# Copy to user.properties (gitignored) and fill in the demo credentials.
+# In CI the same keys are provided from repository secrets.
+coinpulse.standard.username=CHANGE_ME
+coinpulse.standard.password=CHANGE_ME

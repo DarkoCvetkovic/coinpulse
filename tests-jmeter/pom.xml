@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.coinpulse</groupId>
+	<artifactId>coinpulse-tests-jmeter</artifactId>
+	<version>0.1.0</version>
+	<packaging>pom</packaging>
+	<name>coinpulse-tests-jmeter</name>
+	<description>JMeter performance test suite for the CoinPulse backend API</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jmeter-maven-plugin.version>3.8.0</jmeter-maven-plugin.version>
+		<jmeter.version>5.6.3</jmeter.version>
+		<scenario>baseline</scenario>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.lazerycode.jmeter</groupId>
+				<artifactId>jmeter-maven-plugin</artifactId>
+				<version>${jmeter-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>configuration</id>
+						<goals>
+							<goal>configure</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>performance-tests</id>
+						<goals>
+							<goal>jmeter</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>check-results</id>
+						<goals>
+							<goal>results</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<jmeterVersion>${jmeter.version}</jmeterVersion>
+					<generateReports>true</generateReports>
+					<resultsFileFormat>csv</resultsFileFormat>
+					<testFilesIncluded>
+						<jMeterTestFile>coinpulse-api.jmx</jMeterTestFile>
+					</testFilesIncluded>
+					<customPropertiesFiles>
+						<file>${project.basedir}/scenarios/${scenario}.properties</file>
+						<file>${project.basedir}/user.properties</file>
+					</customPropertiesFiles>
+					<errorRateThresholdInPercent>0</errorRateThresholdInPercent>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
