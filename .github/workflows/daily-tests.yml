@@ -171,6 +171,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
+      COINPULSE_BROWSER: chrome
       STANDARD_USERNAME: ${{ secrets.STANDARD_USERNAME }}
       STANDARD_PASSWORD: ${{ secrets.STANDARD_PASSWORD }}
       LOCKED_USERNAME: ${{ secrets.LOCKED_USERNAME }}
