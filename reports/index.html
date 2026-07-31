@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Latest public test reports for the CoinPulse QA automation portfolio"
+    />
+    <title>CoinPulse Test Reports</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background: #07111f;
+        color: #e5edf7;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(33, 150, 243, 0.2),
+            transparent 32rem
+          ),
+          #07111f;
+      }
+
+      main {
+        width: min(1100px, calc(100% - 2rem));
+        margin: 0 auto;
+        padding: 4rem 0;
+      }
+
+      header {
+        max-width: 760px;
+        margin-bottom: 2.5rem;
+      }
+
+      .eyebrow {
+        margin: 0 0 0.75rem;
+        color: #5bc0ff;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2.25rem, 6vw, 4.5rem);
+        line-height: 1;
+      }
+
+      header p {
+        margin: 1.25rem 0 0;
+        color: #aab9ca;
+        font-size: 1.05rem;
+        line-height: 1.7;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 1rem;
+      }
+
+      .card {
+        display: flex;
+        min-height: 220px;
+        flex-direction: column;
+        padding: 1.5rem;
+        border: 1px solid #1d334a;
+        border-radius: 18px;
+        background: rgba(10, 26, 43, 0.88);
+        color: inherit;
+        text-decoration: none;
+        transition:
+          border-color 160ms ease,
+          transform 160ms ease;
+      }
+
+      .card:hover,
+      .card:focus-visible {
+        border-color: #5bc0ff;
+        outline: none;
+        transform: translateY(-3px);
+      }
+
+      .card span {
+        color: #5bc0ff;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .card h2 {
+        margin: 1rem 0 0.65rem;
+        font-size: 1.35rem;
+      }
+
+      .card p {
+        margin: 0;
+        color: #9fb0c2;
+        line-height: 1.55;
+      }
+
+      .card strong {
+        margin-top: auto;
+        padding-top: 1.5rem;
+        color: #f2f7fc;
+      }
+
+      footer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 1.5rem;
+        margin-top: 2.5rem;
+        color: #8194a8;
+        font-size: 0.9rem;
+      }
+
+      footer a {
+        color: #b9dcf3;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">CoinPulse QA portfolio</p>
+        <h1>Test reports</h1>
+        <p>
+          Reports from the latest weekday test run. Every suite uses the same
+          local application, deterministic seed data and API reset contract.
+        </p>
+      </header>
+
+      <section class="grid" aria-label="Available test reports">
+        <a class="card" href="./cypress/">
+          <span>TypeScript</span>
+          <h2>Cypress</h2>
+          <p>Mochawesome report for the full UI and API assisted E2E suite.</p>
+          <strong>Open report</strong>
+        </a>
+
+        <a class="card" href="./playwright/">
+          <span>Three browsers</span>
+          <h2>Playwright</h2>
+          <p>
+            HTML report for Chromium, Firefox and WebKit with named test steps.
+          </p>
+          <strong>Open report</strong>
+        </a>
+
+        <a class="card" href="./selenium/">
+          <span>Java</span>
+          <h2>Selenium</h2>
+          <p>
+            Allure report for smoke, regression and hybrid API and UI coverage.
+          </p>
+          <strong>Open report</strong>
+        </a>
+
+        <a class="card" href="./jmeter/">
+          <span>Performance</span>
+          <h2>JMeter</h2>
+          <p>
+            Baseline dashboard with response times, throughput and percentile
+            charts.
+          </p>
+          <strong>Open dashboard</strong>
+        </a>
+      </section>
+
+      <footer>
+        <span>Updated by the scheduled GitHub Actions run</span>
+        <a href="../">Open CoinPulse</a>
+        <a
+          href="https://github.com/DarkoCvetkovic/coinpulse/actions/workflows/daily-tests.yml"
+        >
+          View workflow history
+        </a>
+      </footer>
+    </main>
+  </body>
+</html>
