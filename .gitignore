@@ -8,10 +8,10 @@ Desktop.ini
 .vscode/
 *.iml
 
-# Local AI assistant files (never commit)
-CLAUDE.md
-CLAUDE.local.md
-.claude/
+# Local workspace files
 AGENTS.md
-.cursorrules
-.aider*
+
+# Generated test tooling
+.allure/
+__pycache__/
+*.pyc

@@ -96,8 +96,11 @@ Every run writes Allure results to `target/allure-results`. The report groups ea
 test into named steps (the keyword layer) and attaches a full-page screenshot for
 every failure. `.\mvnw.cmd allure:serve` builds and opens it locally.
 
+Latest scheduled report:
+[Selenium Allure](https://darkocvetkovic.github.io/coinpulse/reports/selenium/).
+
 ## CI
 
-The suite has no workflow yet. The scheduled full E2E run - backend and frontend
-booted on the runner, smoke set as a fast gate, full suite with the Allure report
-published as an artifact - is the next planned CI stage.
+The weekday Daily tests workflow boots the backend and frontend, runs the smoke set
+as a fast gate, runs the full suite on Chrome, generates the Allure HTML report,
+publishes it to GitHub Pages and uploads the same report as an artifact.

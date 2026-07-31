@@ -22,6 +22,19 @@ hybrid API/UI integration tests and JMeter performance scenarios.
 - The backend runs on Render's free tier - the first request after a period of inactivity can
   take 30-60 seconds while the service wakes up.
 
+## Live test reports
+
+The latest scheduled reports are published at
+**[CoinPulse Test Reports](https://darkocvetkovic.github.io/coinpulse/reports/)**:
+
+- [Cypress Mochawesome](https://darkocvetkovic.github.io/coinpulse/reports/cypress/)
+- [Playwright HTML](https://darkocvetkovic.github.io/coinpulse/reports/playwright/)
+- [Selenium Allure](https://darkocvetkovic.github.io/coinpulse/reports/selenium/)
+- [JMeter dashboard](https://darkocvetkovic.github.io/coinpulse/reports/jmeter/)
+
+The reports are refreshed by the weekday Daily tests workflow. The same files remain
+available as downloadable GitHub Actions artifacts for each run.
+
 ## Repository structure
 
 | Folder | Description | Highlights |
@@ -53,7 +66,7 @@ runs against a locally booted backend.
 | [Backend CI](.github/workflows/backend-ci.yml) | Push/PR on `backend/**` | `mvnw verify` (unit + API tests) |
 | [Frontend Deploy](.github/workflows/frontend-deploy.yml) | Push on `frontend/**` | Lint + Vitest unit tests, then build and deploy to GitHub Pages |
 | [Cypress CI](.github/workflows/cypress-ci.yml) | Push/PR on `tests-cypress/**` | Fast validate: format check, lint, typecheck |
-| [Daily tests](.github/workflows/daily-tests.yml) | Weekdays 06:00 UTC + manual | Six parallel jobs: backend unit, frontend unit, Cypress, Playwright, Selenium, JMeter baseline - each E2E job boots the app on the runner, runs the smoke set as a fast gate, then the full suite; reports upload as artifacts and a pass/fail summary is emailed |
+| [Daily tests](.github/workflows/daily-tests.yml) | Weekdays 06:00 UTC + manual | Six parallel jobs: backend unit, frontend unit, Cypress, Playwright, Selenium, JMeter baseline - each E2E job boots the app on the runner, runs the smoke set as a fast gate, then the full suite; reports publish to GitHub Pages and upload as artifacts, and a pass/fail summary is emailed |
 
 Deploys: the backend auto-deploys to Render (Docker) on `backend/**` changes; the frontend
 deploys to GitHub Pages on `frontend/**` changes.

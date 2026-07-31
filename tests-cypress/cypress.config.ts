@@ -39,8 +39,7 @@ export default defineConfig({
   reporter: 'cypress-mochawesome-reporter',
   reporterOptions: {
     reportDir: 'cypress/reports',
-    reportFilename: '[status]_[datetime]-[name]-report',
-    timestamp: 'longDate',
+    reportFilename: 'index.html',
     reportPageTitle: 'CoinPulse E2E',
     reportTitle: 'CoinPulse - Cypress E2E',
     embeddedScreenshots: true,

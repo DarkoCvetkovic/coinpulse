@@ -4,25 +4,21 @@ on:
   push:
     branches: [main]
     paths:
-      - 'frontend/**'
-      - '.github/workflows/frontend-deploy.yml'
+      - "frontend/**"
+      - ".github/workflows/frontend-deploy.yml"
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
-  id-token: write
 
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -35,33 +31,44 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
+        working-directory: frontend
         run: npm ci
 
       - name: Lint
+        working-directory: frontend
         run: npm run lint
 
       - name: Unit tests
+        working-directory: frontend
         run: npm run test:unit
 
       - name: Build
+        working-directory: frontend
         run: npm run build
 
-      # GitHub Pages serves 404.html for unknown paths - the SPA router takes over from there
       - name: Add SPA fallback
-        run: cp dist/index.html dist/404.html
+        run: cp frontend/dist/index.html frontend/dist/404.html
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
+      - name: Checkout Pages branch
+        uses: actions/checkout@v5
         with:
-          path: frontend/dist
+          ref: gh-pages
+          path: .pages
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Publish frontend
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rsync -a --delete --exclude '.git/' --exclude 'reports/' frontend/dist/ .pages/
+          touch .pages/.nojekyll
+          cd .pages
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'Frontend is already current'
+            exit 0
+          fi
+          git commit -m 'Deploy frontend'
+          git push origin gh-pages
+          gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"

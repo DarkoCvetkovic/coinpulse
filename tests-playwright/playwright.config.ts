@@ -5,6 +5,7 @@ import { authStates } from './src/constants/auth'
 dotenv.config()
 
 const baseURL = process.env.BASE_URL ?? 'http://localhost:5173'
+const traceMode = process.env.PUBLIC_REPORT === 'true' ? 'off' : 'on-first-retry'
 
 export default defineConfig({
   testDir: './tests',
@@ -17,7 +18,7 @@ export default defineConfig({
   use: {
     baseURL,
     testIdAttribute: 'data-testid',
-    trace: 'on-first-retry',
+    trace: traceMode,
   },
   projects: [
     {

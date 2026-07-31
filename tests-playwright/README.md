@@ -67,11 +67,14 @@ endpoint. Specs that mutate data or assert seed facts reset the backend in
 | `npm run validate`      | Format check, lint and typecheck            |
 
 Every run writes an HTML report to `playwright-report/` with per-step traces on
-retry.
+retry. The public scheduled report disables traces so request headers, tokens and
+login payloads cannot be published on GitHub Pages.
+
+Latest scheduled report:
+[Playwright HTML](https://darkocvetkovic.github.io/coinpulse/reports/playwright/).
 
 ## CI
 
-The validate job runs on every push or pull request that touches
-`tests-playwright/`. The scheduled full E2E run - backend and frontend booted on
-the runner, smoke suite as a fast gate, all three browsers, report published as an
-artifact - is the next planned CI stage.
+The weekday Daily tests workflow boots the backend and frontend, runs the smoke
+suite as a fast gate, runs the full suite on Chromium, Firefox and WebKit, publishes
+the HTML report to GitHub Pages and uploads the same report as an artifact.

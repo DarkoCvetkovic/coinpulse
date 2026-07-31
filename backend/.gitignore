@@ -31,11 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### Local AI assistant files (never commit) ###
-CLAUDE.md
-CLAUDE.local.md
-.claude/
-AGENTS.md
-.cursorrules
-.aider*

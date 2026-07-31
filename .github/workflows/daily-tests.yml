@@ -3,12 +3,15 @@ name: Daily tests
 on:
   schedule:
     # 06:00 UTC = 08:00 CEST (07:00 CET in winter), Monday to Friday
-    - cron: '0 6 * * 1-5'
+    - cron: "0 6 * * 1-5"
   workflow_dispatch:
 
 concurrency:
   group: daily-tests
   cancel-in-progress: false
+
+permissions:
+  contents: read
 
 jobs:
   backend-unit:
@@ -26,7 +29,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: "21"
           cache: maven
 
       - name: Build and run tests
@@ -128,6 +131,7 @@ jobs:
       LOCKED_PASSWORD: ${{ secrets.LOCKED_PASSWORD }}
       ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
       ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+      PUBLIC_REPORT: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -158,8 +162,13 @@ jobs:
         working-directory: tests-playwright
         run: npm test
 
-      - name: Upload HTML report
+      - name: Protect public HTML report
+        id: protect_report
         if: always()
+        run: python3 .github/scripts/protect-public-reports.py sanitize-playwright tests-playwright/playwright-report/index.html
+
+      - name: Upload HTML report
+        if: steps.protect_report.outcome == 'success'
         uses: actions/upload-artifact@v5
         with:
           name: playwright-report
@@ -189,16 +198,25 @@ jobs:
         working-directory: tests-selenium
         run: ./mvnw -B -ntp test -Dtest='*SmokeTest'
 
+      - name: Reset Allure results
+        working-directory: tests-selenium
+        run: rm -rf target/allure-results
+
       - name: Full suite
         working-directory: tests-selenium
         run: ./mvnw -B -ntp test
 
-      - name: Upload Allure results
+      - name: Generate Allure report
+        if: always()
+        working-directory: tests-selenium
+        run: ./mvnw -B -ntp allure:report -DskipTests
+
+      - name: Upload Allure report
         if: always()
         uses: actions/upload-artifact@v5
         with:
-          name: selenium-allure-results
-          path: tests-selenium/target/allure-results/
+          name: selenium-allure-report
+          path: tests-selenium/target/site/allure-maven-plugin/
           retention-days: 14
 
   jmeter:
@@ -212,7 +230,7 @@ jobs:
       - name: Boot the app
         uses: ./.github/actions/boot-app
         with:
-          frontend: 'false'
+          frontend: "false"
 
       - name: Write user properties
         working-directory: tests-jmeter
@@ -232,14 +250,107 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: jmeter-dashboard
-          path: tests-jmeter/target/jmeter/reports/
+          path: tests-jmeter/target/jmeter/reports/coinpulse-api/
           retention-days: 14
+
+  publish-reports:
+    name: Publish live reports
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [cypress, playwright, selenium, jmeter]
+    if: always()
+    permissions:
+      contents: write
+      pages: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Checkout Pages branch
+        uses: actions/checkout@v5
+        with:
+          ref: gh-pages
+          path: .pages
+
+      - name: Download Cypress report
+        continue-on-error: true
+        uses: actions/download-artifact@v5
+        with:
+          name: cypress-report
+          path: .reports/cypress
+
+      - name: Download Playwright report
+        continue-on-error: true
+        uses: actions/download-artifact@v5
+        with:
+          name: playwright-report
+          path: .reports/playwright
+
+      - name: Download Selenium report
+        continue-on-error: true
+        uses: actions/download-artifact@v5
+        with:
+          name: selenium-allure-report
+          path: .reports/selenium
+
+      - name: Download JMeter dashboard
+        continue-on-error: true
+        uses: actions/download-artifact@v5
+        with:
+          name: jmeter-dashboard
+          path: .reports/jmeter
+
+      - name: Check reports for passwords
+        env:
+          STANDARD_PASSWORD: ${{ secrets.STANDARD_PASSWORD }}
+          LOCKED_PASSWORD: ${{ secrets.LOCKED_PASSWORD }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+        run: python3 .github/scripts/protect-public-reports.py check .reports
+
+      - name: Publish reports
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .pages/reports
+          cp .github/pages/reports/index.html .pages/reports/index.html
+          for suite in cypress playwright selenium jmeter; do
+            if [ -f ".reports/$suite/index.html" ]; then
+              rm -rf ".pages/reports/$suite"
+              cp -a ".reports/$suite" ".pages/reports/$suite"
+            else
+              echo "No new $suite report, keeping the published version"
+            fi
+          done
+          touch .pages/.nojekyll
+          cd .pages
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'Reports are already current'
+            exit 0
+          fi
+          git commit -m 'Publish test reports'
+          git push origin gh-pages
+          gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"
 
   notify:
     name: Email report
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [backend-unit, frontend-unit, cypress, playwright, selenium, jmeter]
+    needs:
+      [
+        backend-unit,
+        frontend-unit,
+        cypress,
+        playwright,
+        selenium,
+        jmeter,
+        publish-reports,
+      ]
     if: always()
     steps:
       - name: Compose the report
@@ -251,7 +362,9 @@ jobs:
           PLAYWRIGHT: ${{ needs.playwright.result }}
           SELENIUM: ${{ needs.selenium.result }}
           JMETER: ${{ needs.jmeter.result }}
+          REPORTS_PUBLISH: ${{ needs.publish-reports.result }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          REPORTS_URL: https://darkocvetkovic.github.io/coinpulse/reports/
         run: |
           label() {
             case "$1" in
@@ -265,6 +378,7 @@ jobs:
           for r in "$BACKEND_UNIT" "$FRONTEND_UNIT" "$CYPRESS" "$PLAYWRIGHT" "$SELENIUM" "$JMETER"; do
             if [ "$r" = "success" ]; then passed=$((passed + 1)); else overall=FAILED; fi
           done
+          if [ "$REPORTS_PUBLISH" != "success" ]; then overall=FAILED; fi
           {
             echo "CoinPulse daily test report - $(date -u +%Y-%m-%d)"
             echo
@@ -274,11 +388,15 @@ jobs:
             echo "Playwright E2E:  $(label "$PLAYWRIGHT")"
             echo "Selenium E2E:    $(label "$SELENIUM")"
             echo "JMeter baseline: $(label "$JMETER")"
+            echo "Report publish:  $(label "$REPORTS_PUBLISH")"
             echo
-            echo "Run details and downloadable reports:"
+            echo "Live HTML reports:"
+            echo "$REPORTS_URL"
+            echo
+            echo "Run details and downloadable artifacts:"
             echo "$RUN_URL"
           } > body.txt
-          echo "subject=CoinPulse daily tests: $overall ($passed/6)" >> "$GITHUB_OUTPUT"
+          echo "subject=CoinPulse daily tests: $overall ($passed/6 suites)" >> "$GITHUB_OUTPUT"
 
       - name: Send the email
         uses: dawidd6/action-send-mail@v18

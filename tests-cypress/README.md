@@ -74,10 +74,13 @@ endpoint. Specs that mutate data or assert seed facts reset the backend in
 Every headless run writes a self-contained Mochawesome HTML report (embedded
 screenshots on failure) to `cypress/reports/`.
 
+Latest scheduled report:
+[Cypress Mochawesome](https://darkocvetkovic.github.io/coinpulse/reports/cypress/).
+
 ## CI
 
 GitHub Actions (`.github/workflows/cypress-ci.yml`) runs the validate job (format,
 lint, typecheck) on every push or pull request that touches `tests-cypress/`. The
-scheduled full E2E run - backend and frontend booted on the runner, smoke suite as a
-fast gate, full suite with the report published as an artifact - is the next planned
-CI stage.
+weekday Daily tests workflow boots the backend and frontend, runs the smoke suite as
+a fast gate, runs the full suite, publishes the Mochawesome report to GitHub Pages
+and uploads the same report as an artifact.

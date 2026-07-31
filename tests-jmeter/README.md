@@ -104,8 +104,11 @@ Every run writes the raw results (`.csv`) to `target/jmeter/results/` and a full
 JMeter HTML dashboard - throughput, percentiles, response-time charts per request -
 to `target/jmeter/reports/coinpulse-api/index.html`.
 
+Latest scheduled report:
+[JMeter dashboard](https://darkocvetkovic.github.io/coinpulse/reports/jmeter/).
+
 ## CI
 
-The suite has no workflow yet. A scheduled short baseline run against a backend
-booted on the runner, with the HTML dashboard published as an artifact, is the
-next planned CI stage.
+The weekday Daily tests workflow boots the backend on the runner, executes the
+baseline scenario, publishes the HTML dashboard to GitHub Pages and uploads the
+same dashboard as an artifact.
