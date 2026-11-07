@@ -32,7 +32,7 @@ The latest scheduled reports are published at
 - [Selenium Allure](https://darkocvetkovic.github.io/coinpulse/reports/selenium/)
 - [JMeter dashboard](https://darkocvetkovic.github.io/coinpulse/reports/jmeter/)
 
-The reports are refreshed by the weekday Daily tests workflow. The same files remain
+The reports are refreshed by the Daily tests workflow every Wednesday. The same files remain
 available as downloadable GitHub Actions artifacts for each run.
 
 ## Repository structure
@@ -66,7 +66,7 @@ runs against a locally booted backend.
 | [Backend CI](.github/workflows/backend-ci.yml) | Push/PR on `backend/**` | `mvnw verify` (unit + API tests) |
 | [Frontend Deploy](.github/workflows/frontend-deploy.yml) | Push on `frontend/**` | Lint + Vitest unit tests, then build and deploy to GitHub Pages |
 | [Cypress CI](.github/workflows/cypress-ci.yml) | Push/PR on `tests-cypress/**` | Fast validate: format check, lint, typecheck |
-| [Daily tests](.github/workflows/daily-tests.yml) | Weekdays 06:00 UTC + manual | Six parallel jobs: backend unit, frontend unit, Cypress, Playwright, Selenium, JMeter baseline - each E2E job boots the app on the runner, runs the smoke set as a fast gate, then the full suite; reports publish to GitHub Pages and upload as artifacts, and a pass/fail summary is emailed |
+| [Daily tests](.github/workflows/daily-tests.yml) | Wednesdays 06:00 UTC + manual | Six parallel jobs: backend unit, frontend unit, Cypress, Playwright, Selenium, JMeter baseline - each E2E job boots the app on the runner, runs the smoke set as a fast gate, then the full suite; reports publish to GitHub Pages and upload as artifacts, and a pass/fail summary is emailed |
 
 Deploys: the backend auto-deploys to Render (Docker) on `backend/**` changes; the frontend
 deploys to GitHub Pages on `frontend/**` changes.
